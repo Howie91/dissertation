@@ -212,25 +212,3 @@ $(document).ready(function() {
 });
 
 
-
-/*
-	document.querySelector("#bonus3").addEventListener('ValueChange', "#bonus3", function() {
-		bonusBanker3 = $(this).val();
-		if (bonusBanker3 > 0) {
-			$("#bonusDisplay3").html("$" + bonusBanker3 + ",000");
-		} else {
-			$("#bonusDisplay3").html("$0");
-		}
-		bonusUpdater()
-	});
-*/
-
-
-
-/*
-ID="bonus1"
-ID="bonusDisplay1"
-ID="bonusRemaining"
-*/
-
-
