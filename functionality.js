@@ -158,23 +158,7 @@ $(document).ready(function() {
 
 
 function bonusUpdater() {
-		
-	for (i = 1; i < bonusList.length + 1; i++) {
-		remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val();
-		console.log(remainingBonus);
-		
-		if (remainingBonus < 0) {
-			var bonus = $("#bonus" + i).val();
-			var newBonus = bonus - 1;
-			$("#bonus" + i).val(newBonus);
-						
-		} else {
-			break;
-		}
-		
-		/*displayUpdater();*/		
-	}
-	
+
 	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val();
 	
 	if (remainingBonus === 0) {
@@ -184,6 +168,27 @@ function bonusUpdater() {
 	}
 	
 	displayUpdater();
+	
+	if (remainingBonus < 0) {
+		$(".bonus").css( {
+			"backgroundColor": "red"
+		})
+		$("#bonusRemaining").css( {
+			"fontWeight": "bold",
+			"fontSize": "0.9em"
+		})
+		$("#bonusError").show();
+	} else {
+		;$(".bonus").css( {
+			"backgroundColor": "#a296ff"
+		})
+		$("#bonusRemaining").css( {
+			"fontWeight": "normal",
+			"fontsize": "0.8em"
+		})
+		$("#bonusError").hide();
+	}
+		
 }	
 
 

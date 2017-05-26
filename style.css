@@ -42,23 +42,25 @@
 	}
 	
 	.alternative {
-		background-color: #42dff4;
+		background-color: #4cfff6;
 	}
 	
 	.outcome {
-		background-color: #2bbfff;
+		background-color: #4cd8ff;
 	}
 	
 	.result {
-		background-color: #21c424;
+		background-color: #ffae4c;
 		font-weight: bold;
 	}
 	
 	.bonus {
-		background-color: #ff77df;
+		background-color: #a296ff;
 	}
 
-
+	#bonusError {
+		margin-top: 1%;
+	}
 
 
 
