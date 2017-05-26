@@ -156,24 +156,42 @@ $(document).ready(function() {
 });
 
 
-function bonusUpdater() {
+function bonusUpdater(number) {
 	var remainingBonus = 100 - bonusBanker1 - bonusBanker2 - bonusBanker3;
-	if (remainingBonus > 0) {
-		$("#bonusRemaining").html("Remaining: $" + remainingBonus + ",000");
-	} else {
+	if (remainingBonus < 0) {
 		$("#bonusRemaining").html("Remaining: $0");
-		$("#bonus1").val("1");
-		console.log($("#bonus1").val());
 		
 		for (var i = 0; i < bonusList.length; i++) {
-			var reducedBonus = eval(bankerList[i]) - 1;
-			document.getElementById(bonusList[i]).value = reducedBonus;
-		
-			bankerList[i] = reducedBonus;
+			console.log("Counter");
+			
+			if (document.getElementById(bonusList[i]).value > 0) {
+				var reducedBonus = eval(bankerList[i]) - 1;
+				document.getElementById(bonusList[i]).value = reducedBonus;
+			}
+			
+			if (i !== number) {
+				bankerList[i] = reducedBonus;
+				
+			}
 		}
+		
+		if (number === "0") {
+			bankerList[0] = bonusBanker1;
+		} else if (number === "1") {
+			bankerList[1] = bonusBanker2;
+		} else if (number === "2") {
+			bankerList[2] = bonusBanker3;
+		}
+		
+		/*
 		bankerBonus1();
 		bankerBonus2();
 		bankerBonus3();
+		*/
+		
+	} else {
+		
+		$("#bonusRemaining").html("Remaining: $" + remainingBonus + ",000");
 	}
 }	
 
@@ -185,7 +203,7 @@ function bankerBonus1() {
 		} else {
 			$("#bonusDisplay1").html("$0");
 		}
-		bonusUpdater()
+		bonusUpdater(number="0")
 }
 
 function bankerBonus2() {
@@ -195,7 +213,7 @@ function bankerBonus2() {
 		} else {
 			$("#bonusDisplay2").html("$0");
 		}
-		bonusUpdater()
+		bonusUpdater(number="1")
 }
 
 function bankerBonus3() {
@@ -205,7 +223,7 @@ function bankerBonus3() {
 		} else {
 			$("#bonusDisplay3").html("$0");
 		}
-		bonusUpdater()
+		bonusUpdater(number="3")
 }
 
 
