@@ -142,7 +142,6 @@ var imageList = ["person1", "person2", "person3", "person4", "person5", "person6
 
 
 $(document).ready(function() {
-
 	for (var i = 1; i < 4; i++) {
 		var chosenImage = imageList[Math.floor(Math.random() * imageList.length)];
 
@@ -163,21 +162,70 @@ function bonusUpdater() {
 		$("#bonusRemaining").html("Remaining: $" + remainingBonus + ",000");
 	} else {
 		$("#bonusRemaining").html("Remaining: $0");
-		/*document.getElementById("bonus1").value = "1";*/
+		$("#bonus1").val("1");
+		console.log($("#bonus1").val());
 		
 		for (var i = 0; i < bonusList.length; i++) {
 			var reducedBonus = eval(bankerList[i]) - 1;
 			document.getElementById(bonusList[i]).value = reducedBonus;
-			console.log(reducedBonus);
+		
 			bankerList[i] = reducedBonus;
 		}
-		/*bankerBonus1();*/
+		bankerBonus1();
+		bankerBonus2();
+		bankerBonus3();
 	}
 }	
 
+
+function bankerBonus1() {
+		bonusBanker1 = $("#bonus1").val();
+		if (bonusBanker1 > 0) {
+			$("#bonusDisplay1").html("$" + bonusBanker1 + ",000");
+		} else {
+			$("#bonusDisplay1").html("$0");
+		}
+		bonusUpdater()
+}
+
+function bankerBonus2() {
+		bonusBanker2 = $("#bonus2").val();
+		if (bonusBanker1 > 0) {
+			$("#bonusDisplay2").html("$" + bonusBanker2 + ",000");
+		} else {
+			$("#bonusDisplay2").html("$0");
+		}
+		bonusUpdater()
+}
+
+function bankerBonus3() {
+		bonusBanker3 = $("#bonus3").val();
+		if (bonusBanker1 > 0) {
+			$("#bonusDisplay3").html("$" + bonusBanker3 + ",000");
+		} else {
+			$("#bonusDisplay3").html("$0");
+		}
+		bonusUpdater()
+}
+
+
+
 $(document).ready(function() {
 	$('#bonus1').on('input', function() {
-		console.log("Hello");
+		bankerBonus1();
+	});
+	
+	$('#bonus2').on('input', function() {
+		bankerBonus2();
+	});
+	
+	$('#bonus3').on('input', function() {
+		bankerBonus3();
+	});
+	
+	
+	/*
+	$('#bonus1').on('input', function() {
 		bonusBanker1 = $(this).val();
 		if (bonusBanker1 > 0) {
 			$("#bonusDisplay1").html("$" + bonusBanker1 + ",000");
@@ -186,7 +234,7 @@ $(document).ready(function() {
 		}
 		bonusUpdater()
 	});
-
+	
 
 
 	$('#bonus2').on('input', function() {
@@ -209,6 +257,8 @@ $(document).ready(function() {
 		}
 		bonusUpdater()
 	});
+	
+	*/
 });
 
 
