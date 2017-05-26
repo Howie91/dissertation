@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<html>
+	<head>
+		<title>The Bonus Experiment</title>
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="functionality.js" ></script>
+	</head>
+	
+	<body>
+		<div id="logo">
+			<img id="logo" src="resources/uclLogo.png">
+		</div>
+	
+	
+		<div class="content" id="page1">
+			<h2>Welcome to Greenfields Capital Management!</h2
+			<p class="description">Say hello to our three top investment bankers!</p>
+			<p class="description"><span class="name1">name1</span>, 
+			<span class="name2">name2</span> and <span class="name3">name3</span> 
+			are completely identical. They all graduated as the best in their 
+			classes from top schools, have remarkable cognitive abilities and about 
+			five years experience in the business. 
+			The only difference is the markets they cover.</p>		
+			<div id="introImages">
+				<div class="image">
+					<img class="image1" src="resources/persons/person1.png" />
+					<p><span class="name1">name1</span></p>
+				</div>
+				<div class="image">
+					<img class="image2" src="resources/persons/person2.png" />
+					<p><span class="name2">name2</span></p>
+				</div>
+				<div class="image">
+					<img class="image3" src="resources/persons/person3.png" />
+					<p><span class="name3">name3</span></p>
+				</div>
+			</div>
+			<a class="nextButton" href="#">Next</a>
+		</div>
+		
+		<div class="content" id="page2">
+			<h3>Consent Form</h3>
+			<p class="description">I confirm that...</p>
+			<div>
+				<input type="checkbox" id="consentCheck">
+				<label>I confirm that I understand and accept terms above.</label>
+				<p class="error" id="consentError">Please read through the consent form and tick 
+				the box if you agree to the conditions.</p>
+				
+			</div>
+			<a class="nextButton" href="#">Next</a>
+		</div>
+		
+		<div class="content" id="page3">
+			<p class="description">Soon you will get the exciting task of being their manager 
+			throughout the next financial year. But before we hand over 
+			the control to you, the HR department has requested some basic 
+			information. It would be great if you could send them that.</p>
+			
+			<div class="userForm" id="nameDiv">
+				<fieldset>
+					<legend>First Name:</legend>
+					<div>
+						<input type="text" name="userName" id="un"/>
+					</div>
+				</fieldset>
+				<div class="error" id="nameError">
+					<p>HR really needs your name in order to proceed.</p>
+				</div>
+			</div>
+			
+			<div class="userForm" id="ageDiv">
+				<fieldset>
+					<legend>Age:</legend>
+					<div>
+					<input type="number" name="userAge" id="ua" min="15" max="80"/>
+					</div>
+				</fieldset>
+				<div class="error" id="ageError">
+					<p>Your age is important in order to calculate your pensions. You wouldn't miss that, would you?</p>
+				</div>
+			</div>
+			
+			<div class="userForm" id="userGender">
+				<fieldset>
+					<legend>Gender:</legend>
+					<div>
+						<div>	
+							<input type="radio" value="male" name="gender">
+							<label>Male</label>
+						</div>
+						<div>
+							<input type="radio" value="female" name="gender">
+							<label>Female</label>
+						</div>
+					</div>
+				</fieldset>
+				<div class="error" id="genderError">
+					<p>Please fill in your gender for statistics reason.</p>
+				</div>
+			</div>
+						
+			<div class="userForm" id="userEducation">
+				<fieldset>
+					<legend>Education:</legend>
+					<div>
+						<div>	
+							<input type="radio" value="middleSchool" name="education">
+							<label>Middle School</label>
+						</div>
+						<div>
+							<input type="radio" value="highSchool" name="education">
+							<label>High School</label>
+						</div>
+						<div>
+							<input type="radio" value="undergrad" name="education">
+							<label>Undergraduate Degree</label>
+						</div>
+						<div>
+							<input type="radio" value="postgrad" name="education">
+							<label>Postgraduate Degree</label>
+						</div>
+					</div>
+				</fieldset>
+				<div class="error" id="eduError">
+					<p>We're sorry, but education is required.</p>
+				</div>
+			</div>
+			<a class="nextButton" id="sendButton" href="#">Send</a>
+		</div>
+		
+		<div class="content" id="page4">
+
+			<p class="description">Brilliant, <span id="withUN">userName</span>! Now that HR is happy it is time 
+			to have a look at your job description.</p>
+			<h3>Instructions</h3>
+			<p class="description">You have already been introduced to your team of 
+			investment bankers. This is our highest performing team and you have 
+			the pleasure of managing them for the next 12 months. Greenfield Capital Management's 
+			goal is to maximise long-term profits and thus we are prepared for short-term losses.</p>
+			<p class="description">Your job is simple, as with all bankers, their main motivation is to 
+			make money, and at the end of each month you will allocate a total of $100,000 in bonuses 
+			between the three.</p>
+			<p class="description">Their job is also relatively simple. Each month they are allocated with 
+			$10m in fresh cash from our investors. They then have to make a choice between two alternatives;</p>
+			<p class="description">1. Invest in a risky stock portfolio in their respective market.
+			</br>2. Invest in risk-free government bonds.</p>
+			<p id="description"><b>Please note:</b> The portfolio has a known probability destribution 
+			calculated by our analytics department. This is the only information they have available, 
+			thus, you have access to the exact same information that they do.</p>
+			<p id="instructionError" class="error">That was quick! Are you sure you are ready to proceed?</p>
+			<a class="nextButton" id="instructionsNext" href="#">Next</a>
+		</div>
+		
+		<div class="content" id="page5">
+			<p class="description">Carefully consider the options available to each banker.
+			</br>Click 'Next' to reveal their choices.</p>
+			<div id="experimentImages">
+				<div class="image">
+					<img class="image1" src="resources/persons/person1.png" />
+					<p><span class="name1">name1</span></p>
+				</div>
+				<div class="image">
+					<img class="image2" src="resources/persons/person2.png" />
+					<p><span class="name2">name2</span></p>
+				</div>
+				<div class="image">
+					<img class="image3" src="resources/persons/person3.png" />
+					<p><span class="name3">name3</span></p>
+				</div>
+			</div>
+			<div class="divTable">
+				<div class="divTableBody">
+					<div class="divTableRow">
+						<div class="divTableCell leftAlign alternative">Stock Portfolio:</div>
+						<div class="divTableCell alternative" ID="stock1">30%: $12.0m</br>70%: $8.0m</div>
+						<div class="divTableCell alternative" ID="stock1">30%: $12.0m</br>70%: $8.0m</div>
+						<div class="divTableCell alternative" ID="stock1">30%: $12.0m</br>70%: $8.0m</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell leftAlign alternative">Bonds:</div>
+						<div class="divTableCell alternative">100%: $10.1m</div>
+						<div class="divTableCell alternative">100%: $10.1m</div>
+						<div class="divTableCell alternative">100%: $10.1m</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell leftAlign outcome">Outcome (stocks):</div>
+						<div class="divTableCell outcome" ID="outcomeStock1">$12.0m</div>
+						<div class="divTableCell outcome" ID="outcomeStock2">$12.0m</div>
+						<div class="divTableCell outcome" ID="outcomeStock3">$12.0m</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell leftAlign outcome">Outcome (bonds):</div>
+						<div class="divTableCell outcome">$10.1m</div>
+						<div class="divTableCell outcome">$10.1m</div>
+						<div class="divTableCell outcome">$10.1m</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell leftAlign result">Result:</div>
+						<div class="divTableCell result" ID="result1">$12.0m</div>
+						<div class="divTableCell result" ID="result2">$12.0m</div>
+						<div class="divTableCell result" ID="result3">$12.0m</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell leftAlign bonus">Bonus:</br><span ID="bonusRemaining">Remaining: $100,000</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus1" min="0" max="100" step="1"/></br><span ID="bonusDisplay1">$0</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus2" min="0" max="100" step="1"/></br><span ID="bonusDisplay2">$0</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus3" min="0" max="100" step="1"/></br><span ID="bonusDisplay3">$0</span></div>
+					</div>
+				</div>
+			</div>
+			<a class="nextButton" id="instructionsNext" href="#">Next</a>
+			
+			
+		</div>
+	</body>
+</html>
+
+
+
+
+	
+
