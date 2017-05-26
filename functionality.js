@@ -174,28 +174,10 @@ function bonusUpdater() {
 		/*bankerBonus1();*/
 	}
 }	
-/*
-function bankerBonus1() {
-	bonusBanker1 = $(this).val();
-	if (bonusBanker1 > 0) {
-		$("#bonusDisplay1").html("$" + bonusBanker1 + ",000");
-	} else {
-		$("#bonusDisplay1").html("$0");
-	}
-	bonusUpdater()
-}
 
-var p = document.getElementById("bonus1");
-
-if (p) {
-	p.addEventListener("ValueChange", bankerBonus1(), false);
-}
-
-*/
-
-$("#bonus1").input(function() {
-	console.log("Hello");
-	document.querySelector("#bonus1").addEventListener('input', function() {
+$(document).ready(function() {
+	$('#bonus1').on('input', function() {
+		console.log("Hello");
 		bonusBanker1 = $(this).val();
 		if (bonusBanker1 > 0) {
 			$("#bonusDisplay1").html("$" + bonusBanker1 + ",000");
@@ -204,22 +186,34 @@ $("#bonus1").input(function() {
 		}
 		bonusUpdater()
 	});
+
+
+
+	$('#bonus2').on('input', function() {
+		bonusBanker2 = $(this).val();
+		if (bonusBanker2 > 0) {
+			$("#bonusDisplay2").html("$" + bonusBanker2 + ",000");
+		} else {
+			$("#bonusDisplay2").html("$0");
+		}
+		bonusUpdater()
+	});
+
+
+	$('#bonus3').on('input', function() {
+		bonusBanker3 = $(this).val();
+		if (bonusBanker3 > 0) {
+			$("#bonusDisplay3").html("$" + bonusBanker3 + ",000");
+		} else {
+			$("#bonusDisplay3").html("$0");
+		}
+		bonusUpdater()
+	});
 });
 
-document.querySelector("#bonus2").addEventListener('ValueChange', function() {
-    bonusBanker2 = $(this).val();
-	if (bonusBanker2 > 0) {
-		$("#bonusDisplay2").html("$" + bonusBanker2 + ",000");
-	} else {
-		$("#bonusDisplay2").html("$0");
-	}
-	bonusUpdater()
-});
-
-var bonusThree = document.querySelector("#bonus3");
 
 
-
+/*
 	document.querySelector("#bonus3").addEventListener('ValueChange', "#bonus3", function() {
 		bonusBanker3 = $(this).val();
 		if (bonusBanker3 > 0) {
@@ -229,7 +223,7 @@ var bonusThree = document.querySelector("#bonus3");
 		}
 		bonusUpdater()
 	});
-
+*/
 
 
 
