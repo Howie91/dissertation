@@ -18,6 +18,7 @@ function nextPage() {
 function consentChecker() {
 	if ($("#consentCheck").is(":checked")) {
 		pageTurner()
+		$("#nextButton1").html("Send");
 	} else {
 		$("#consentError").show()
 	}
@@ -53,18 +54,18 @@ function demographicsChecker() {
 		$("#eduError").show()
 	}
 	
-	if (username.length > 3 && userage > 14 && 
+	if (username.length > 3 && userage > 14 && userage < 81 &&
 		usergender.length > 3 && usereducation.length > 3) {
 		
-			pageTurner();
-			instructionsTimer();
+		$("#nextButton1").html("Next");
+		pageTurner();
+		instructionsTimer();
 	}
 	
 }
 
 function nameUpdater() {
 	document.getElementById("withUN").textContent = username;
-	
 }
 
 
@@ -78,10 +79,13 @@ function pageTurner() {
 function instructionsChecker() {
 	if (instructionCheck) {
 		pageTurner();
+		$("#nextButton1").hide();
+		$("#nextButton1").html("Next");
+		$("#infoNext").show();
 	} else {
 		$("#instructionError").show();
 		instructionCheck = true;
-		$("#instructionsNext").html("Yes");
+		$("#nextButton1").html("Yes");
 	}
 }
 
@@ -98,9 +102,29 @@ function instructionOk() {
 
 
 
+
+
+
+
 /* Buttons */	
-$(".nextButton").click(nextPage);
-$("#instructionsNext").click(nextInfo);
+$(document).ready(function(){
+	/*$("#nextButton1").show();*/
+	
+	$("#requestButton").show();
+	
+	$("#nextButton1").click(nextPage);
+	$("#nextButton2").click(nextPage);
+	$("#sendButton").click(nextPage);
+	$("#nextButton4").click(nextPage);
+	$("#infoNext").on("click", nextInfo);
+	$("#requestButton").click(requestData);
+		
+});
+
+
+
+
+
 
 
 /* Defining variables */
@@ -115,6 +139,16 @@ var bonusBanker3 = 0;
 var bonusList = ["bonus1", "bonus2", "bonus3"];
 var bankerList = ["bonusBanker1", "bonusBanker2", "bonusBanker3"];
 var displayList = ["bonusDisplay1", "bonusDisplay2", "bonusDisplay3"];
+
+
+var usereducation
+var usergender 
+var username 
+var userage 
+
+
+
+
 
 /* Randomising banker names */
 var nameList = ["Harry", "Oliver", "Jack", "Charlie", "Thomas", "Jacob", "James", "Josh", "William",
@@ -325,7 +359,7 @@ function portfolioRandomisation() {
 		$("#stock" + m).html(outcomeProbs);
 		$("#outcomeStock" + m).html(stockOutcome);
 		
-		choiceMaker(i);
+		choiceMaker(i, m);
 	}
 };
 
@@ -333,8 +367,9 @@ function portfolioRandomisation() {
 /* Determining banker's investment choice See sub-comments */
 
 choiceList = [];
+decisionList = [];
 
-function choiceMaker() {
+function choiceMaker(i, m) {
 	
 	/* Determining whether banker makes a correct or incorrect decision */
 	choiceProbability = (Math.floor(Math.random() * 100));
@@ -367,78 +402,117 @@ function choiceMaker() {
 	/* Displaying choise based on expected values and whether choice is correct or incorrect */
 	if (choiceList[i] === "correct") {
 		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
-			$("#stock" + m).css( {
-				"backgroundColor": "red",
-				"fontWeight": "bold"
-			});
-			$("#bond" + m).css( {
-				"backgroundColor": "#4cfff6",
-				"fontWeight": "normal"
-			});
+			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
 		} else {									/*Bonds are chosen*/
-			$("#bond" + m).css( {
-				"backgroundColor": "red",
-				"fontWeight": "bold"
-			});
-			$("#stock" + m).css( {
-				"backgroundColor": "#4cfff6",
-				"fontWeight": "normal"
-			});
+			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
 		}
 	} else {
 		if (expectedValue <= 10.1) { 				/*Stocks are chosen*/
-			$("#stock" + m).css( {
-				"backgroundColor": "red",
-				"fontWeight": "bold"
-			});
-			$("#bond" + m).css( {
-				"backgroundColor": "#4cfff6",
-				"fontWeight": "normal"
-			});
+			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
 		} else {									/*Bonds are chosen*/
-			$("#bond" + m).css( {
-				"backgroundColor": "red",
-				"fontWeight": "bold"
-			});
-			$("#stock" + m).css( {
-				"backgroundColor": "#4cfff6",
-				"fontWeight": "normal"
-			});
+			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
 		}
 	}
-	
-	
 };
 
 
+function choiceDisplay() {
+	for (var i = 0; i < 3; i++) {
+		var n = i + 1;
+		if (decisionList[i] === "stocks") {
+			$("#stock" + n).css( {
+				"backgroundColor": "red",
+				"fontWeight": "bold"
+			});
+			$("#bond" + n).css( {
+				"backgroundColor": "#4cfff6",
+				"fontWeight": "normal"
+			});
+			
+		} else {
+			$("#bond" + n).css( {
+				"backgroundColor": "red",
+				"fontWeight": "bold"
+			});
+			$("#stock" + n).css( {
+				"backgroundColor": "#4cfff6",
+				"fontWeight": "normal"
+			});
+			
+		}
+	}
+}
+
+var page5counter = 1;
+
+/* Page 5 preperation */
+function page5reset() {
+	$(".outcome").hide();
+	$(".result").hide();
+	$(".bonus").hide();
+	
+	var page5counter = 1;
+}
 
 
 
+function nextInfo() {
+	if (page5counter === 1) {
+		choiceDisplay();
+		$("#instructionsPage5").html("The investment decisions have been made, and the chosen alternatives now have red backgrounds. Click 'Next' to reveal the outcomes.");
+	} else if (page5counter === 2) {
+		$(".outcome").show();
+		$(".result").show();
+		$("#instructionsPage5").html("The results are out! </br> Click 'Next' to proceed.");
+	} else if (page5counter === 3) {
+		$(".bonus"). show();
+		$("#instructionsPage5").html("Now, please allocate the bonus based on the information available. </br> Click 'Submit' to send your allocations to HR for it to be added to their next pay check.");
+		$("#infoNext").html("Submit");
+		if (helpTextShown === false){
+			helpTextTime();
+		}
+	} else if (page5counter === 4) {
+		$("#helpText").hide();
+		$("#infoNext").hide();
+		$("#requestButton").show();
+		nextPage();
+	}
+	page5counter += 1;
+}
+
+var helpTextShown = false;
+
+function helpTextTime() {
+	timeoutID = window.setTimeout(helpTextShow, 2000);
+}
+
+function helpTextShow() {
+	$("#helpText").fadeIn(3000);
+	helpTextShown = true;
+}
+
+
+$(document).ready(function() {
+	portfolioRandomisation();
+	page5reset();
+});
 
 
 
+/* Requesting new month */
+/*
+function requestData() {
+	
+	
+	
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 
