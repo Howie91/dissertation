@@ -171,6 +171,34 @@ display: none;
 }
 
 
+/* Duplicate CSS for instructionsNext */
+
+#instructionsNext {
+margin-bottom: 5%;
+margin-top: 3%;
+float: right;
+padding-left: 2%;
+padding-right: 2%;
+background-color: #c9c9c9;
+color: black;
+border-radius: 5px;
+text-align: center;
+position: absolute;
+}
+
+#instructionsNext, a {
+text-decoration: none;
+font-size: 1.1em;
+position: relative;
+}
+
+#instructionsNext:hover {
+background-color: #b7b7b7;
+font-weight: bold;
+}
+
+
+
 /* Input range styling */
 
 input[type=range] {

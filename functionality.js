@@ -63,7 +63,6 @@ function demographicsChecker() {
 }
 
 function nameUpdater() {
-	console.log(window.username);
 	document.getElementById("withUN").textContent = username;
 	
 }
@@ -101,6 +100,7 @@ function instructionOk() {
 
 /* Buttons */	
 $(".nextButton").click(nextPage);
+$("#instructionsNext").click(nextInfo);
 
 
 /* Defining variables */
@@ -157,6 +157,8 @@ $(document).ready(function() {
 });
 
 
+
+/* Adding functionality to input sliders*/
 function bonusUpdater() {
 
 	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val();
@@ -189,8 +191,7 @@ function bonusUpdater() {
 		$("#bonusError").hide();
 	}
 		
-}	
-
+}
 
 
 function displayUpdater() {
@@ -201,12 +202,7 @@ function displayUpdater() {
 			$("#bonusDisplay" + i).html("$0");
 		}
 	}
-	
 }
-
-
-
-
 
 
 $(document).ready(function() {
@@ -225,5 +221,225 @@ $(document).ready(function() {
 		bonusUpdater();
 	});
 });
+
+
+/* Randomising positions of banker personalities */
+
+var personalityList = ["competent", "average", "incompetent"];
+
+
+function shuffle(o) {
+	for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+};
+
+shuffle(personalityList);
+
+
+/* Randomising alternatives and choises */
+
+function portfolioRandomisation() {
+	for (i = 0; i < personalityList.length; i++) {
+		
+		/* Determining whether portfolio has high (extreme) or low risk */
+		var extreme = false;
+		var extremeDeterminator = (Math.floor(Math.random() * 100));
+		
+		if (personalityList[i] === "competent") {
+			if (extremeDeterminator < 20) {
+				extreme = true;
+			}
+		} else if (personalityList[i] === "average") {
+			if (extremeDeterminator < 30) {
+				extreme = true;
+			}
+		} else {
+			if (extremeDeterminator < 40) {
+				extreme = true;
+			}
+		}
+	
+		if (extreme) {
+			firstProb = (Math.floor(Math.random() * 3) + 1) * 10;
+			firstOutcome = (Math.floor(Math.random() * 10) + 11);
+			secondOutcome = (Math.floor(Math.random() * 3) + 5);
+		} else {
+			firstProb = (Math.floor(Math.random() * 4) + 3) * 10;
+			firstOutcome = (Math.floor(Math.random() * 4) + 11);
+			secondOutcome = (Math.floor(Math.random() * 2) + 8);
+		}
+		
+		secondProb = 100 - firstProb;
+		
+		outcomeProbs = firstProb + "%: $" + firstOutcome + ".0m</br>" + 
+						secondProb + "%: $" + secondOutcome + ".0m";
+						
+		bondsProb = "100%: $10.1m";
+		bondsOutcome = "$10.1m";
+		
+		
+		/* Calculating expected value before luck is assigned for use in choiceMaker() */
+		expectedValue = (firstProb / 100) * firstOutcome + 
+						(secondProb / 100) * secondOutcome;
+		
+		
+		/* Adding bad luck to competent banker, and good luck to incompetent */
+		if (personalityList[i] === "competent") {
+			firstProb -= 20;
+			secondProb += 20;
+		} else if (personalityList[i] === "incompetent") {
+			firstProb += 20;
+			secondProb -= 20;
+		}
+		
+		var probabilityVariableList = [firstProb, secondProb];
+		
+		
+		/* Making sure probabilities lie between 0 and 100 */
+		for (var j = 0; j < 2; j++) {
+			if (probabilityVariableList[j] > 100) {
+				probabilityVariableList[j] = 100;
+			} else if (probabilityVariableList[j] < 0) {
+				probabilityVariableList[j] = 0;
+			}
+		}
+		
+		
+		/* Creating list of possible stock outcomes and randomising outcome */
+		outcomeList = []
+		
+		for (var k = 0; k < firstProb; k++) {
+			outcomeList.push(firstOutcome);
+		}
+		
+		for (var n = 0; n < secondProb; n++) {
+			outcomeList.push(secondOutcome);
+		}
+		
+		
+		stockOutcome = "$" + outcomeList[Math.floor(Math.random() * outcomeList.length)] + ".0m";
+		
+		m = i + 1;
+		
+		/* Sending input to GUI */
+		$("#stock" + m).html(outcomeProbs);
+		$("#outcomeStock" + m).html(stockOutcome);
+		
+		choiceMaker(i);
+	}
+};
+
+
+/* Determining banker's investment choice See sub-comments */
+
+choiceList = [];
+
+function choiceMaker() {
+	
+	/* Determining whether banker makes a correct or incorrect decision */
+	choiceProbability = (Math.floor(Math.random() * 100));
+	
+	if (personalityList[i] === "competent") {
+		if (choiceProbability < 80) {
+			compPersonDecision = "correct";		
+		} else {
+			compPersonDecision = "incorrect";
+		}
+		choiceList.push(compPersonDecision);
+		
+	} else if (personalityList[i] === "average") {
+		if (choiceProbability < 65) {
+			avgPersonDecision = "correct";		
+		} else {
+			avgPersonDecision = "incorrect";
+		}
+		choiceList.push(avgPersonDecision);
+		
+	} else if (personalityList[i] === "incompetent") {
+		if (choiceProbability < 50) {
+			incompPersonDecision = "correct";		
+		} else {
+			incompPersonDecision = "incorrect";
+		}
+		choiceList.push(incompPersonDecision);
+	}
+	
+	/* Displaying choise based on expected values and whether choice is correct or incorrect */
+	if (choiceList[i] === "correct") {
+		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
+			$("#stock" + m).css( {
+				"backgroundColor": "red",
+				"fontWeight": "bold"
+			});
+			$("#bond" + m).css( {
+				"backgroundColor": "#4cfff6",
+				"fontWeight": "normal"
+			});
+			$("#result" + m).html(stockOutcome);
+		} else {									/*Bonds are chosen*/
+			$("#bond" + m).css( {
+				"backgroundColor": "red",
+				"fontWeight": "bold"
+			});
+			$("#stock" + m).css( {
+				"backgroundColor": "#4cfff6",
+				"fontWeight": "normal"
+			});
+			$("#result" + m).html(bondsOutcome);
+		}
+	} else {
+		if (expectedValue <= 10.1) { 				/*Stocks are chosen*/
+			$("#stock" + m).css( {
+				"backgroundColor": "red",
+				"fontWeight": "bold"
+			});
+			$("#bond" + m).css( {
+				"backgroundColor": "#4cfff6",
+				"fontWeight": "normal"
+			});
+			$("#result" + m).html(stockOutcome);
+		} else {									/*Bonds are chosen*/
+			$("#bond" + m).css( {
+				"backgroundColor": "red",
+				"fontWeight": "bold"
+			});
+			$("#stock" + m).css( {
+				"backgroundColor": "#4cfff6",
+				"fontWeight": "normal"
+			});
+			$("#result" + m).html(bondsOutcome);
+		}
+	}
+	
+	
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
