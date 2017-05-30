@@ -61,10 +61,29 @@ position: relative;
 top: 0;
 margin-top: 15%;
 padding: 1% 2% 1% 2%;
+}
 
 
+#subPage62 {
+	display: none;
+	height: 50%;
+}
+
+#progress {
+border: 1px solid black;
+margin-top: 10%;
+height: 50px;	
+}
+
+#progressBar {
+    width: 1%;
+    height: 50px;
+    background-color: #3ee064;
 	
 }
+
+
+
 
 
 
@@ -251,16 +270,26 @@ display: none;
 display: none;
 }
 
+
 #page5 {
 display: none;
 }
 
-/*
+
 #page6 {
 display: none;
 }
-*/
 
+
+#page7 {
+display: none;
+}
+
+/*
+#page8 {
+display: none;
+}
+*/
 
 
 
@@ -366,4 +395,74 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #6A717A;
+}
+
+
+
+
+/* Likert scale survey design */
+
+#page8 {
+	width: 65%;
+}
+
+html,body {padding:0;margin:0;}
+.wrap {
+  font:0.8em, Arial, san-serif;
+}
+
+form .statement {
+  display:block;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding-top: 2%;
+  margin-bottom:10px;
+}
+form .likert {
+  list-style:none;
+  width:100%;
+  margin:0;
+  padding:0 0 35px;
+  display:block;
+  /*border-bottom:2px solid #efefef;*/
+}
+
+.borderBottom {
+	border-bottom:1px solid #adadad;
+	position:relative;
+	height: 2px;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -3%;
+}
+
+form .likert:last-of-type {border-bottom:0;}
+form .likert:before {
+  content: '';
+  position:relative;
+  top:11px;
+  left:10%;
+  display:block;
+  background-color:#efefef;
+  height:4px;
+  width:80%;
+}
+form .likert li {
+  display:inline-block;
+  width:19%;
+  text-align:center;
+  vertical-align: top;
+}
+form .likert li input[type=radio] {
+  display:block;
+  position:relative;
+  top:0;
+  left:50%;
+  margin-left:-6px; 
+}
+
+form .likert li label {
+	width:100%;
+	font-size: 0.8em;
 }

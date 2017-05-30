@@ -9,7 +9,12 @@ function nextPage() {
 		demographicsChecker()
 	} else if (currentPage === 4) {
 		instructionsChecker()
-	} else {
+	} else if (currentPage === 5) {
+		pageTurner()
+	} else if (currentPage === 6) {
+		$("#page5").hide();
+		$("#page7").show();
+	} else if (currentPage === 7) {
 		pageTurner()
 	}
 }	
@@ -65,7 +70,8 @@ function demographicsChecker() {
 }
 
 function nameUpdater() {
-	document.getElementById("withUN").textContent = username;
+	$("#withUN").html = username;
+	$("#withUserName").html = username;
 }
 
 
@@ -110,15 +116,15 @@ function instructionOk() {
 $(document).ready(function(){
 	/*$("#nextButton1").show();*/
 	
-	$("#requestButton").show();
-	
+	/*$("#infoNext").show();*/
 	$("#nextButton1").click(nextPage);
-	$("#nextButton2").click(nextPage);
-	$("#sendButton").click(nextPage);
-	$("#nextButton4").click(nextPage);
 	$("#infoNext").on("click", nextInfo);
 	$("#requestButton").click(requestData);
 		
+	$("#promotion1").click({param: "0"}, promoFunc);
+	$("#promotion2").click({param: "1"}, promoFunc);
+	$("#promotion3").click({param: "2"}, promoFunc);	
+	
 });
 
 
@@ -128,7 +134,9 @@ $(document).ready(function(){
 
 
 /* Defining variables */
-var currentPage = 1;
+var currentPage = 7;				/* OBS OBS */
+
+var trialCounter = 1;
 
 var instructionCheck = false;
 
@@ -273,6 +281,10 @@ shuffle(personalityList);
 /* Randomising alternatives and choises */
 
 function portfolioRandomisation() {
+		
+	choiceList = [];
+	decisionList = [];
+	
 	for (i = 0; i < personalityList.length; i++) {
 		
 		/* Determining whether portfolio has high (extreme) or low risk */
@@ -366,8 +378,6 @@ function portfolioRandomisation() {
 
 /* Determining banker's investment choice See sub-comments */
 
-choiceList = [];
-decisionList = [];
 
 function choiceMaker(i, m) {
 	
@@ -421,6 +431,7 @@ function choiceMaker(i, m) {
 
 
 function choiceDisplay() {
+	console.log(decisionList);
 	for (var i = 0; i < 3; i++) {
 		var n = i + 1;
 		if (decisionList[i] === "stocks") {
@@ -455,12 +466,18 @@ function page5reset() {
 	$(".result").hide();
 	$(".bonus").hide();
 	
-	var page5counter = 1;
+	page5counter = 1;
 }
 
 
 
 function nextInfo() {
+	if (trialCounter <= 2) {
+		currentPage = 5;
+	} else {
+		currentPage = 6;
+	}
+	
 	if (page5counter === 1) {
 		choiceDisplay();
 		$("#instructionsPage5").html("The investment decisions have been made, and the chosen alternatives now have red backgrounds. Click 'Next' to reveal the outcomes.");
@@ -479,6 +496,8 @@ function nextInfo() {
 		$("#helpText").hide();
 		$("#infoNext").hide();
 		$("#requestButton").show();
+		$("#subPage62").hide();
+		trialCounter += 1;
 		nextPage();
 	}
 	page5counter += 1;
@@ -487,7 +506,7 @@ function nextInfo() {
 var helpTextShown = false;
 
 function helpTextTime() {
-	timeoutID = window.setTimeout(helpTextShow, 2000);
+	timeoutID = window.setTimeout(helpTextShow, 1000);
 }
 
 function helpTextShow() {
@@ -504,16 +523,50 @@ $(document).ready(function() {
 
 
 /* Requesting new month */
-/*
+
 function requestData() {
-	
-	
-	
+	$("#subPage61").hide();
+	$("#subPage62").show();
+	move();
+}
+
+function move() {
+  var elem = document.getElementById("progressBar");   
+  var width = 0;
+  var id = setInterval(frame, 3);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+	  trialReset();
+    } else {
+      width += 0.2; 
+      elem.style.width = width + '%'; 
+    }
+  }
 }
 
 
-*/
+function trialReset() {
+	portfolioRandomisation();
+	page5reset();
+	$("#page6").hide();
+	$("#subPage62").hide();
+	$("#subPage61").show();
+	width = 0;
+	$("#page5").show();
+	$("#infoNext").html("Next");
+	$("#infoNext").show();
+	$(".alternative").css( {
+		"backgroundColor": "#4cfff6",
+		"fontWeight": "normal"
+	});
+	$("#instructionsPage5").html("Again, carefully consider the options available to each banker.</br>Click 'Next' to reveal their choices.");
+}
 
 
-
+function promoFunc(event) {
+	promoted = personalityList[(event.data.param)];
+	nextPage();
+	
+}
 
