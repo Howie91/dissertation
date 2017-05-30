@@ -2,20 +2,22 @@
 
 function nextPage() {
 	if (currentPage === 1) {
-		pageTurner()
+		pageTurner();
 	} else if (currentPage === 2) {
-		consentChecker()
+		consentChecker();
 	} else if (currentPage === 3) {
-		demographicsChecker()
+		demographicsChecker();
 	} else if (currentPage === 4) {
-		instructionsChecker()
+		instructionsChecker();
 	} else if (currentPage === 5) {
-		pageTurner()
+		pageTurner();
 	} else if (currentPage === 6) {
 		$("#page5").hide();
 		$("#page7").show();
 	} else if (currentPage === 7) {
-		pageTurner()
+		pageTurner();
+	} else if (currentPage === 8) {
+		surveyCollector();
 	}
 }	
 	
@@ -70,8 +72,8 @@ function demographicsChecker() {
 }
 
 function nameUpdater() {
-	$("#withUN").html = username;
-	$("#withUserName").html = username;
+	document.getElementById("withUN").textContent = username;
+	document.getElementById("withUN").textContent = username;
 }
 
 
@@ -114,7 +116,7 @@ function instructionOk() {
 
 /* Buttons */	
 $(document).ready(function(){
-	/*$("#nextButton1").show();*/
+	$("#nextButton1").show();
 	
 	/*$("#infoNext").show();*/
 	$("#nextButton1").click(nextPage);
@@ -134,7 +136,7 @@ $(document).ready(function(){
 
 
 /* Defining variables */
-var currentPage = 7;				/* OBS OBS */
+var currentPage = 1;				/* OBS OBS */
 
 var trialCounter = 1;
 
@@ -567,6 +569,11 @@ function trialReset() {
 function promoFunc(event) {
 	promoted = personalityList[(event.data.param)];
 	nextPage();
-	
+	$("#nextButton1").show();
+	$("#nextButton1").html("Submit");
 }
 
+function surveyCollector() {
+	console.log("Hello");
+	
+}
