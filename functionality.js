@@ -1,5 +1,7 @@
 
 
+
+
 function nextPage() {
 	if (currentPage === 1) {
 		pageTurner();
@@ -14,6 +16,7 @@ function nextPage() {
 	} else if (currentPage === 6) {
 		$("#page5").hide();
 		$("#page7").show();
+		currentPage++;
 	} else if (currentPage === 7) {
 		pageTurner();
 	} else if (currentPage === 8) {
@@ -73,7 +76,7 @@ function demographicsChecker() {
 
 function nameUpdater() {
 	document.getElementById("withUN").textContent = username;
-	document.getElementById("withUN").textContent = username;
+	document.getElementById("withUserName").textContent = username;
 }
 
 
@@ -81,6 +84,10 @@ function pageTurner() {
 	$("#page" + currentPage).hide();
 	currentPage++;
 	$("#page" + currentPage).show();
+	
+		
+	
+	
 }
 
 
@@ -200,7 +207,7 @@ $(document).ready(function() {
 	}
 });
 
-
+var remainingBonus = 100;
 
 /* Adding functionality to input sliders*/
 function bonusUpdater() {
@@ -265,6 +272,9 @@ $(document).ready(function() {
 		bonusUpdater();
 	});
 });
+
+
+
 
 
 /* Randomising positions of banker personalities */
@@ -433,7 +443,6 @@ function choiceMaker(i, m) {
 
 
 function choiceDisplay() {
-	console.log(decisionList);
 	for (var i = 0; i < 3; i++) {
 		var n = i + 1;
 		if (decisionList[i] === "stocks") {
@@ -467,11 +476,13 @@ function page5reset() {
 	$(".outcome").hide();
 	$(".result").hide();
 	$(".bonus").hide();
+	$("#lowBonusError").hide();
+	doubleCheck = false;
 	
 	page5counter = 1;
 }
 
-
+var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function nextInfo() {
 	if (trialCounter <= 2) {
@@ -494,21 +505,51 @@ function nextInfo() {
 		if (helpTextShown === false){
 			helpTextTime();
 		}
-	} else if (page5counter === 4) {
-		$("#helpText").hide();
-		$("#infoNext").hide();
+	} else {
 		$("#requestButton").show();
 		$("#subPage62").hide();
-		trialCounter += 1;
-		nextPage();
+		$("#month").html(monthList[trialCounter - 1]);
+		bonusCollector();
 	}
 	page5counter += 1;
 }
 
+
+var doubleCheck = false;
+
+function bonusCollector() {
+	
+	
+	/* Code for storing bonus-data */
+	
+	
+	
+	if (doubleCheck === true) {
+		nextPage();
+		$("#helpText").hide();
+		$("#infoNext").hide();
+		trialCounter += 1;
+	}
+	
+	if (remainingBonus < 90) {
+		nextPage()
+		$("#helpText").hide();
+		$("#infoNext").hide();
+		trialCounter += 1;
+	} else {
+		$("#lowBonusError").show();
+		$("#infoNext").html("Yes");
+		doubleCheck = true;
+	}
+}
+
+
+
+
 var helpTextShown = false;
 
 function helpTextTime() {
-	timeoutID = window.setTimeout(helpTextShow, 1000);
+	timeoutID = window.setTimeout(helpTextShow, 700);
 }
 
 function helpTextShow() {
@@ -568,6 +609,7 @@ function trialReset() {
 
 function promoFunc(event) {
 	promoted = personalityList[(event.data.param)];
+	console.log(event.data.param);
 	nextPage();
 	$("#nextButton1").show();
 	$("#nextButton1").html("Submit");
