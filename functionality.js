@@ -241,6 +241,11 @@ function bonusUpdater() {
 		})
 		$("#bonusError").hide();
 	}
+	
+	if (remainingBonus < 90) {
+		$("#lowBonusError").hide();
+		$("#infoNext").html("Submit");
+	}
 		
 }
 
@@ -478,6 +483,11 @@ function page5reset() {
 	$(".bonus").hide();
 	$("#lowBonusError").hide();
 	doubleCheck = false;
+	$("#bonus1").val(0);
+	$("#bonus2").val(0);
+	$("#bonus3").val(0);
+	bonusUpdater();
+	displayUpdater();
 	
 	page5counter = 1;
 }
@@ -524,19 +534,19 @@ function bonusCollector() {
 	
 	
 	
-	if (doubleCheck === true) {
+	if (doubleCheck === true && remainingBonus >= 90) {
 		nextPage();
 		$("#helpText").hide();
 		$("#infoNext").hide();
 		trialCounter += 1;
 	}
 	
-	if (remainingBonus < 90) {
+	if (remainingBonus < 90 && remainingBonus >= 0) {
 		nextPage()
 		$("#helpText").hide();
 		$("#infoNext").hide();
 		trialCounter += 1;
-	} else {
+	} else if (remainingBonus >= 90) {
 		$("#lowBonusError").show();
 		$("#infoNext").html("Yes");
 		doubleCheck = true;
