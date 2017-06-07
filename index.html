@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+
 
 <html>
 	<head>
-		<title>The Bonus Experiment</title>
+		<title>Greenfield Capital Management</title>
 		<link rel="stylesheet" href="style.css">
-		<!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
 		<script type="text/javascript" src="functionality.js" ></script>
 	</head>
 	
@@ -14,6 +15,7 @@
 		<div id="logo">
 			<img id="logo" src="resources/uclLogo.png">
 		</div>
+		
 	
 		<div class="sideContainer">
 			<a class="nextButton" id="nextButton1" href="#">Next</a>		
@@ -21,9 +23,10 @@
 				award each employee with the bonus you think they deserve.</p>
 			<a class="nextButton" id="infoNext" href="#">Next</a>
 		</div>
+		
 	
 		<div class="content" id="page1">
-			<h2>Welcome to Greenfields Capital Management!</h2
+			<h2>Welcome to Greenfield Capital Management!</h2
 			<p class="description">Say hello to our three top investment bankers!</p>
 			<p class="description"><span class="name1">name1</span>, 
 			<span class="name2">name2</span> and <span class="name3">name3</span> 
@@ -33,20 +36,20 @@
 			The only difference is the markets they cover.</p>		
 			<div id="introImages">
 				<div class="image">
-					<img class="image1" src="resources/persons/person1.png" />
-					<p><span class="name1">name1</span></p>
+					<img class="image1" src="" />
+					<p><span class="name1"></span></p>
 				</div>
 				<div class="image">
-					<img class="image2" src="resources/persons/person2.png" />
-					<p><span class="name2">name2</span></p>
+					<img class="image2" src="" />
+					<p><span class="name2"></span></p>
 				</div>
 				<div class="image">
-					<img class="image3" src="resources/persons/person3.png" />
-					<p><span class="name3">name3</span></p>
+					<img class="image3" src="" />
+					<p><span class="name3"></span></p>
 				</div>
 			</div>
-
 		</div>
+		
 		
 		<div class="content" id="page2">
 			<h3>Consent Form</h3>
@@ -56,10 +59,9 @@
 				<label>I confirm that I understand and accept terms above.</label>
 				<p class="error" id="consentError">Please read through the consent form and tick 
 				the box if you agree to the conditions.</p>
-				
 			</div>
-			
 		</div>
+		
 		
 		<div class="content" id="page3">
 			<p class="description">Soon you will get the exciting task of being their manager 
@@ -136,11 +138,10 @@
 					<p>We're sorry, but education is required.</p>
 				</div>
 			</div>
-			
 		</div>
 		
+		
 		<div class="content" id="page4">
-
 			<p class="description">Brilliant, <span id="withUN">userName</span>! Now that HR is happy it is time 
 			to have a look at your job description.</p>
 			<h3>Instructions</h3>
@@ -159,24 +160,24 @@
 			calculated by our analytics department. This is the only information they have available, 
 			thus, you have access to the exact same information that they do.</p>
 			<p id="instructionError" class="error">That was quick! Are you sure you are ready to proceed?</p>
-			
 		</div>
+		
 		
 		<div class="content" id="page5">
 			<p class="description" id="instructionsPage5">Carefully consider the options available to each banker.
 			</br>Click 'Next' to reveal their choices.</p>
 			<div id="experimentImages">
 				<div class="image">
-					<img class="image1" src="resources/persons/person1.png" />
-					<p><span class="name1">name1</span></p>
+					<img class="image1" src="" />
+					<p><span class="name1"></span></p>
 				</div>
 				<div class="image">
-					<img class="image2" src="resources/persons/person2.png" />
-					<p><span class="name2">name2</span></p>
+					<img class="image2" src="" />
+					<p><span class="name2"></span></p>
 				</div>
 				<div class="image">
-					<img class="image3" src="resources/persons/person3.png" />
-					<p><span class="name3">name3</span></p>
+					<img class="image3" src="" />
+					<p><span class="name3"></span></p>
 				</div>
 			</div>
 			<div class="divTable">
@@ -220,11 +221,13 @@
 				</div>
 			</div>
 			<p class="error" ID="bonusError">Don't get to eager now. Please stick to your allocated bonus budget of $100,000.</p>
+			<p class="error" ID="lowBonusError">Woops, we just want to check that you didn't click 'Submit' by mistake. Do you want to submit?</p>
 		</div>
 
+		
 		<div class="content" id="page6">
 			<div id="subPage61">
-				<p>January is now finished, and your team members have received their bonuses.</p>
+				<p><span id="month">January</span> is now finished, and your team members have received their bonuses.</p>
 				<p>Click 'Request' to ask the analytics team to prepare for a new month.</p>
 				<a class="nextButton" id="requestButton" href="#">Request</a>
 			</div>
@@ -240,29 +243,28 @@
 		
 		
 		<div class="content" ID="page7">
-			<p>Great, <span ID="withUserName">userName</span>!</p>
+			<p>Fantastic job, <span ID="withUserName">userName</span>!</p>
 			<p>There is an opening for a senior posistion, and you have to promote the person you believe is the most competent.</br>
 			Please click on the person you would like to promote.</p> 
-		
-		
+			
 			<div id="promotionImages">
 				<div class="image">
 					<a href="#" id="promotion1">
-						<img class="image1" src="resources/persons/person1.png" />
+						<img class="image1" src="" />
 					</a>
-					<p><span class="name1">name1</span></p>
+					<p><span class="name1"></span></p>
 				</div>
 				<div class="image">
 					<a href="#" id="promotion2">
-						<img class="image2" src="resources/persons/person2.png" />
+						<img class="image2" src="" />
 					</a>
-					<p><span class="name2">name2</span></p>
+					<p><span class="name2"></span></p>
 				</div>
 				<div class="image">
 					<a href="#" id="promotion3">
-						<img class="image3" src="resources/persons/person3.png" />
+						<img class="image3" src="" />
 					</a>
-					<p><span class="name3">name3</span></p>
+					<p><span class="name3"></span></p>
 				</div>
 			</div>
 		</div>
@@ -277,23 +279,23 @@
 					<label class="statement">Competence</label>
 					<ul class='likert'>
 				  <li>
-					<input type="radio" name="likert" value="4">
+					<input type="radio" name="competence" value="4">
 					<label>Very important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="3">
+					<input type="radio" name="competence" value="3">
 					<label>Important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="2">
+					<input type="radio" name="competence" value="2">
 					<label>Somewhat important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="1">
+					<input type="radio" name="competence" value="1">
 					<label>Not important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="0">
+					<input type="radio" name="competence" value="0">
 					<label>Totally irrelevant</label>
 				  </li>
 				</ul>
@@ -301,23 +303,23 @@
 				<label class="statement">Quality of decision-making process</label>
 				<ul class='likert'>
 				  <li>
-					<input type="radio" name="likert" value="4">
+					<input type="radio" name="decisionQuality" value="4">
 					<label>Very important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="3">
+					<input type="radio" name="decisionQuality" value="3">
 					<label>Important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="2">
+					<input type="radio" name="decisionQuality" value="2">
 					<label>Somewhat important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="1">
+					<input type="radio" name="decisionQuality" value="1">
 					<label>Not important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="0">
+					<input type="radio" name="decisionQuality" value="0">
 					<label>Totally irrelevant</label>
 				  </li>
 				</ul>
@@ -325,37 +327,57 @@
 				<label class="statement">Goodness of outcome</label>
 				<ul class='likert'>
 				  <li>
-					<input type="radio" name="likert" value="4">
+					<input type="radio" name="outomeQuality" value="4">
 					<label>Very important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="3">
+					<input type="radio" name="outomeQuality" value="3">
 					<label>Important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="2">
+					<input type="radio" name="outomeQuality" value="2">
 					<label>Somewhat important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="1">
+					<input type="radio" name="outomeQuality" value="1">
 					<label>Not important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="likert" value="0">
+					<input type="radio" name="outomeQuality" value="0">
 					<label>Totally irrelevant</label>
 				  </li>
 				</ul>
 			  </form>
+			  <p class="error" id="surveyError">Please rate all the criteria</p>
 			</div>
-		
-		
-		
-		
-		
 		</div>
+		
+		
+		<div class="content" id="page9">
+			<h2>Thank you!</h2
+			<p class="description">Your time working for Greenfield Capital Management is over, and we really appreciate your contribution to both the company and science!</p>
+			<p class="description">After a cake sesion with <span class="name1">name1</span>, 
+			<span class="name2">name2</span> and <span class="name3">name3</span> 
+			they wave goodbye.</p>
+			<p class="description">Please close the tap to end the experiment</p>
+			<div id="introImages">
+				<div class="image">
+					<img class="image1" src="" />
+					<p><span class="name1"></span></p>
+				</div>
+				<div class="image">
+					<img class="image2" src="" />
+					<p><span class="name2"></span></p>
+				</div>
+				<div class="image">
+					<img class="image3" src="" />
+					<p><span class="name3"></span></p>
+				</div>
+			</div>
+		</div>
+		
 	</body>
 </html>
-
 
 
 

@@ -1,7 +1,6 @@
+/*General functions */
 
-
-
-
+/* Calling page-relevant functions */
 function nextPage() {
 	if (currentPage === 1) {
 		pageTurner();
@@ -23,8 +22,23 @@ function nextPage() {
 		surveyCollector();
 	}
 }	
+
+/* Flippin' pages */	
+function pageTurner() {
+	$("#page" + currentPage).hide();
+	currentPage++;
+	$("#page" + currentPage).show();
+}
 	
+/* Shufflin' */
+function shuffle(o) {
+	for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+};
 	
+
+/* Page 2 */
+/* Checks whether consent has been provided */
 function consentChecker() {
 	if ($("#consentCheck").is(":checked")) {
 		pageTurner()
@@ -34,13 +48,15 @@ function consentChecker() {
 	}
 }
 
+
+/* Page 3 */
+/* Checking and collecting demographics information */
 function demographicsChecker() {
 	username = document.getElementById("un").value;
 	if (username.length < 3) {
 		$("#nameError").show()
 	} else {
 		$("#nameError").hide()
-		nameUpdater()
 	}
 		
 	var userage = document.getElementById("ua").value;
@@ -67,30 +83,34 @@ function demographicsChecker() {
 	if (username.length > 3 && userage > 14 && userage < 81 &&
 		usergender.length > 3 && usereducation.length > 3) {
 		
+		ref.push({
+			"Age": userage,
+			"Gender": usergender,
+			"Education": usereducation
+		});
+		
+		nameUpdater()
 		$("#nextButton1").html("Next");
 		pageTurner();
 		instructionsTimer();
+		
+		/* Preparing page 5 for first trial */
+		portfolioRandomisation();
+		page5reset();
+		
+		
 	}
-	
 }
 
+/* Updating remaining experiment with participant's name */
 function nameUpdater() {
 	document.getElementById("withUN").textContent = username;
 	document.getElementById("withUserName").textContent = username;
 }
 
 
-function pageTurner() {
-	$("#page" + currentPage).hide();
-	currentPage++;
-	$("#page" + currentPage).show();
-	
-		
-	
-	
-}
-
-
+/* Page 4 */
+/* Confirming whether sufficient time has been spent on reading instructions */
 function instructionsChecker() {
 	if (instructionCheck) {
 		pageTurner();
@@ -106,7 +126,7 @@ function instructionsChecker() {
 
 
 function instructionsTimer() {
-	var timer = setTimeout(instructionOk, 5000);
+	var timer = setTimeout(instructionOk, 20000); /* Set time requirement here */
 }
 
 function instructionOk() {
@@ -114,189 +134,8 @@ function instructionOk() {
 }
 
 
-
-
-
-
-
-
-
-/* Buttons */	
-$(document).ready(function(){
-	$("#nextButton1").show();
-	
-	/*$("#infoNext").show();*/
-	$("#nextButton1").click(nextPage);
-	$("#infoNext").on("click", nextInfo);
-	$("#requestButton").click(requestData);
-		
-	$("#promotion1").click({param: "0"}, promoFunc);
-	$("#promotion2").click({param: "1"}, promoFunc);
-	$("#promotion3").click({param: "2"}, promoFunc);	
-	
-});
-
-
-
-
-
-
-
-/* Defining variables */
-var currentPage = 1;				/* OBS OBS */
-
-var trialCounter = 1;
-
-var instructionCheck = false;
-
-var bonusBanker1 = 0;
-var bonusBanker2 = 0;
-var bonusBanker3 = 0;
-
-var bonusList = ["bonus1", "bonus2", "bonus3"];
-var bankerList = ["bonusBanker1", "bonusBanker2", "bonusBanker3"];
-var displayList = ["bonusDisplay1", "bonusDisplay2", "bonusDisplay3"];
-
-
-var usereducation
-var usergender 
-var username 
-var userage 
-
-
-
-
-
-/* Randomising banker names */
-var nameList = ["Harry", "Oliver", "Jack", "Charlie", "Thomas", "Jacob", "James", "Josh", "William",
-			   "Ethan", "George", "Riley", "Daniel", "Sam", "Oscar", "Joseph", "Mohammed", "Max"];
-
-$(document).ready(function() {
-
-	for (var i = 1; i < 4; i++) {
-		var bankerName = nameList[Math.floor(Math.random() * nameList.length)];
-	
-		for (var j = nameList.length - 1; j >= 0; j--) {
-			if (nameList[j] === bankerName) {
-				nameList.splice(j, 1);
-				break;
-			}
-		}
-		
-		var text = $('.name' + i).html().replace(RegExp("name" + i, "g"), bankerName);
-		$('.name' + i).html(text);
-	}
-});
-
-
-/* Randomising banker images */
-var imageList = ["person1", "person2", "person3", "person4", "person5", "person6", "person7"];
-
-
-$(document).ready(function() {
-	for (var i = 1; i < 4; i++) {
-		var chosenImage = imageList[Math.floor(Math.random() * imageList.length)];
-
-		for (var j = imageList.length - 1; j >= 0; j--) {
-			if (imageList[j] === chosenImage) {
-				imageList.splice(j, 1);
-				break;
-			}
-		}
-		$('.image' + i).attr("src", "resources/persons/" + chosenImage + ".png");
-	}
-});
-
-var remainingBonus = 100;
-
-/* Adding functionality to input sliders*/
-function bonusUpdater() {
-
-	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val();
-	
-	if (remainingBonus === 0) {
-		$("#bonusRemaining").html("Remaining: $0");
-	} else {
-		$("#bonusRemaining").html("Remaining: $" + remainingBonus + ",000");
-	}
-	
-	displayUpdater();
-	
-	if (remainingBonus < 0) {
-		$(".bonus").css( {
-			"backgroundColor": "red"
-		})
-		$("#bonusRemaining").css( {
-			"fontWeight": "bold",
-			"fontSize": "0.9em"
-		})
-		$("#bonusError").show();
-	} else {
-		;$(".bonus").css( {
-			"backgroundColor": "#a296ff"
-		})
-		$("#bonusRemaining").css( {
-			"fontWeight": "normal",
-			"fontsize": "0.8em"
-		})
-		$("#bonusError").hide();
-	}
-	
-	if (remainingBonus < 90) {
-		$("#lowBonusError").hide();
-		$("#infoNext").html("Submit");
-	}
-		
-}
-
-
-function displayUpdater() {
-	for (var i = 1; i < displayList.length + 1; i++) {
-		if ($("#bonus" + i).val() > 0) {
-			$("#bonusDisplay" + i).html("$" + $("#bonus" + i).val() + ",000");
-		} else {
-			$("#bonusDisplay" + i).html("$0");
-		}
-	}
-}
-
-
-$(document).ready(function() {
-	$('#bonus1').on('input', function() {
-		bonusBanker1 = $("#bonus1").val();
-		bonusUpdater();
-	});
-	
-	$('#bonus2').on('input', function() {
-		bonusBanker2 = $("#bonus2").val();
-		bonusUpdater();
-	});
-	
-	$('#bonus3').on('input', function() {
-		bonusBanker3 = $("#bonus3").val();
-		bonusUpdater();
-	});
-});
-
-
-
-
-
-/* Randomising positions of banker personalities */
-
-var personalityList = ["competent", "average", "incompetent"];
-
-
-function shuffle(o) {
-	for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-	return o;
-};
-
-shuffle(personalityList);
-
-
-/* Randomising alternatives and choises */
-
+/* Page 5 */
+/* Randomising investment alternatives and calling choice maker function */
 function portfolioRandomisation() {
 		
 	choiceList = [];
@@ -394,8 +233,6 @@ function portfolioRandomisation() {
 
 
 /* Determining banker's investment choice See sub-comments */
-
-
 function choiceMaker(i, m) {
 	
 	/* Determining whether banker makes a correct or incorrect decision */
@@ -426,7 +263,7 @@ function choiceMaker(i, m) {
 		choiceList.push(incompPersonDecision);
 	}
 	
-	/* Displaying choise based on expected values and whether choice is correct or incorrect */
+	/* Displaying choice based on expected values and whether choice is correct or incorrect */
 	if (choiceList[i] === "correct") {
 		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
@@ -447,6 +284,63 @@ function choiceMaker(i, m) {
 };
 
 
+
+
+/* Calculating remaining bonus, and calling for display update */
+function bonusUpdater() {
+	
+	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val();
+	
+	if (remainingBonus === 0) {
+		$("#bonusRemaining").html("Remaining: $0");
+	} else {
+		$("#bonusRemaining").html("Remaining: $" + remainingBonus + ",000");
+	}
+	
+	displayUpdater();
+	
+	if (remainingBonus < 0) {
+		$(".bonus").css( {
+			"backgroundColor": "red"
+		})
+		$("#bonusRemaining").css( {
+			"fontWeight": "bold",
+			"fontSize": "0.9em"
+		})
+		$("#bonusError").show();
+	} else {
+		;$(".bonus").css( {
+			"backgroundColor": "#a296ff"
+		})
+		$("#bonusRemaining").css( {
+			"fontWeight": "normal",
+			"fontsize": "0.8em"
+		})
+		$("#bonusError").hide();
+	}
+	
+	if (remainingBonus < 90) {
+		$("#lowBonusError").hide();
+		$("#infoNext").html("Submit");
+	}
+		
+}
+
+/* Updates numbers displayed to user */
+function displayUpdater() {
+	for (var i = 1; i < displayList.length + 1; i++) {
+		if ($("#bonus" + i).val() > 0) {
+			$("#bonusDisplay" + i).html("$" + $("#bonus" + i).val() + ",000");
+		} else {
+			$("#bonusDisplay" + i).html("$0");
+		}
+	}
+}
+
+
+
+
+/* Changing background colours of chosen alternatives */
 function choiceDisplay() {
 	for (var i = 0; i < 3; i++) {
 		var n = i + 1;
@@ -469,12 +363,10 @@ function choiceDisplay() {
 				"backgroundColor": "#4cfff6",
 				"fontWeight": "normal"
 			});
-			
 		}
 	}
 }
 
-var page5counter = 1;
 
 /* Page 5 preperation */
 function page5reset() {
@@ -492,8 +384,8 @@ function page5reset() {
 	page5counter = 1;
 }
 
-var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+/* Displaying information on click of 'Next' button */
 function nextInfo() {
 	if (trialCounter <= 2) {
 		currentPage = 5;
@@ -525,8 +417,18 @@ function nextInfo() {
 }
 
 
-var doubleCheck = false;
+/* Animating in help text */
+function helpTextTime() {
+	timeoutID = window.setTimeout(helpTextShow, 700);
+}
 
+function helpTextShow() {
+	$("#helpText").fadeIn(3000);
+	helpTextShown = true;
+}
+
+
+/* Checking and collecting bonus, displays error if budget is not met, and requires confirmation for small bonus allocations */
 function bonusCollector() {
 	
 	
@@ -554,51 +456,7 @@ function bonusCollector() {
 }
 
 
-
-
-var helpTextShown = false;
-
-function helpTextTime() {
-	timeoutID = window.setTimeout(helpTextShow, 700);
-}
-
-function helpTextShow() {
-	$("#helpText").fadeIn(3000);
-	helpTextShown = true;
-}
-
-
-$(document).ready(function() {
-	portfolioRandomisation();
-	page5reset();
-});
-
-
-
-/* Requesting new month */
-
-function requestData() {
-	$("#subPage61").hide();
-	$("#subPage62").show();
-	move();
-}
-
-function move() {
-  var elem = document.getElementById("progressBar");   
-  var width = 0;
-  var id = setInterval(frame, 3);
-  function frame() {
-    if (width >= 100) {
-      clearInterval(id);
-	  trialReset();
-    } else {
-      width += 0.2; 
-      elem.style.width = width + '%'; 
-    }
-  }
-}
-
-
+/* Resets and prepares for new trial */
 function trialReset() {
 	portfolioRandomisation();
 	page5reset();
@@ -617,15 +475,199 @@ function trialReset() {
 }
 
 
+/* Page 6 */
+/* Requesting new month */
+function requestData() {
+	$("#subPage61").hide();
+	$("#subPage62").show();
+	move();
+}
+
+
+/* Animating progress bar */
+function move() {
+  var elem = document.getElementById("progressBar");   
+  var width = 0;
+  var id = setInterval(frame, 3);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+	  trialReset();
+    } else {
+      width += 0.2; 
+      elem.style.width = width + '%'; 
+    }
+  }
+}
+
+
+/* Page 7 */
+/* Collects promotion data and displays final page */
 function promoFunc(event) {
 	promoted = personalityList[(event.data.param)];
-	console.log(event.data.param);
 	nextPage();
 	$("#nextButton1").show();
 	$("#nextButton1").html("Submit");
 }
 
+/* Page 8*/
+/* Collects survey data */
 function surveyCollector() {
-	console.log("Hello");
-	
+	competence = document.querySelector('input[name="competence"]:checked').value;
+	decisionQuality = document.querySelector('input[name="decisionQuality"]:checked').value;
+	outcomeQuality = document.querySelector('input[name="outcomeQuality"]:checked').value;
 }
+
+
+
+
+
+
+
+
+/* Adding functionality to buttons */	
+$(document).ready(function(){
+	$("#nextButton1").show();
+	
+	$("#nextButton1").click(nextPage);
+	$("#infoNext").on("click", nextInfo);
+	$("#requestButton").click(requestData);
+		
+	$("#promotion1").click({param: "0"}, promoFunc);
+	$("#promotion2").click({param: "1"}, promoFunc);
+	$("#promotion3").click({param: "2"}, promoFunc);	
+});
+
+
+/* Adding functionality to input sliders */
+$(document).ready(function() {
+	$('#bonus1').on('input', function() {
+		bonusBanker1 = $("#bonus1").val();
+		bonusUpdater();
+	});
+	
+	$('#bonus2').on('input', function() {
+		bonusBanker2 = $("#bonus2").val();
+		bonusUpdater();
+	});
+	
+	$('#bonus3').on('input', function() {
+		bonusBanker3 = $("#bonus3").val();
+		bonusUpdater();
+	});
+});
+
+
+
+/* Defining variables */
+var currentPage = 1;
+var trialCounter = 1;
+
+var personalityList = ["competent", "average", "incompetent"];
+
+
+/* Page 3 Variables */
+var usereducation
+var usergender 
+var username 
+var userage 
+
+
+/* Page 4 variables */
+var instructionCheck = false;
+
+
+/* Page 5 variables */
+var page5counter = 1;
+
+var remainingBonus = 100;
+
+var bonusBanker1 = 0;
+var bonusBanker2 = 0;
+var bonusBanker3 = 0;
+
+var bonusList = ["bonus1", "bonus2", "bonus3"];
+var bankerList = ["bonusBanker1", "bonusBanker2", "bonusBanker3"];
+var displayList = ["bonusDisplay1", "bonusDisplay2", "bonusDisplay3"];
+
+var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+var doubleCheck = false;
+var helpTextShown = false;
+
+/* Page 8 */
+var competence = -1;
+var decisionQuality = -1;
+var outcomeQuality = -1;
+
+
+
+
+
+/* Generic code running when page has loaded */
+
+/* Randomising banker names */
+var nameList = ["Harry", "Matt", "Oliver", "Jack", "Charlie", "Thomas", "Jacob", "James", "Josh", "William",
+			   "Ethan", "George", "Riley", "Daniel", "Sam", "Oscar", "Joseph", "Mohammed", "Max"];
+
+$(document).ready(function() {
+
+	for (var i = 1; i < 4; i++) {
+		var bankerName = nameList[Math.floor(Math.random() * nameList.length)];
+	
+		for (var j = nameList.length - 1; j >= 0; j--) {
+			if (nameList[j] === bankerName) {
+				nameList.splice(j, 1);
+				break;
+			}
+		}
+		
+		var text = $('.name' + i).html().replace(RegExp("name" + i, "g"), bankerName);
+		$('.name' + i).html(text);
+	}
+});
+
+
+/* Randomising banker images */
+var imageList = ["person1", "person2", "person3", "person4", "person5", "person6", "person7"];
+
+$(document).ready(function() {
+	
+	for (var i = 1; i < 4; i++) {
+		var chosenImage = imageList[Math.floor(Math.random() * imageList.length)];
+
+		for (var j = imageList.length - 1; j >= 0; j--) {
+			if (imageList[j] === chosenImage) {
+				imageList.splice(j, 1);
+				break;
+			}
+		}
+		$('.image' + i).attr("src", "resources/persons/" + chosenImage + ".png");
+	}
+});
+
+
+
+/* Randomising positions of banker personalities */
+$(document).ready(function() {
+	shuffle(personalityList);
+});
+
+
+
+/* Initialize Firebase */
+$(document).ready(function() {
+	var config = {
+	apiKey: "AIzaSyAd3DYft_Mlx7h5sukd2AB3irAOgH0Hz38",
+	authDomain: "the-bonus-experiment.firebaseapp.com",
+	databaseURL: "https://the-bonus-experiment.firebaseio.com",
+	projectId: "the-bonus-experiment",
+	storageBucket: "the-bonus-experiment.appspot.com",
+	messagingSenderId: "146625832163"
+	};
+	firebase.initializeApp(config);
+	
+	database = firebase.database();
+	ref = database.ref('rawData');	
+});
+
