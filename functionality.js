@@ -83,11 +83,9 @@ function demographicsChecker() {
 	if (username.length > 3 && userage > 14 && userage < 81 &&
 		usergender.length > 3 && usereducation.length > 3) {
 		
-		ref.push({
-			"Age": userage,
-			"Gender": usergender,
-			"Education": usereducation
-		});
+		dataList.push(userage);
+		dataList.push(usergender);
+		dataList.push(usereducation);
 		
 		nameUpdater()
 		$("#nextButton1").html("Next");
@@ -141,6 +139,7 @@ function portfolioRandomisation() {
 	decisionList = [];
 	choiceList = [];
 	expectedValueList = [];
+	resultList = [];
 	
 	for (i = 0; i < personalityList.length; i++) {
 		
@@ -270,17 +269,21 @@ function choiceMaker(i, m) {
 		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
+			resultList.push(stockOutcome);
 		} else {									/*Bonds are chosen*/
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
+			resultList.push(bondsOutcome);
 		}
 	} else {
 		if (expectedValue <= 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
+			resultList.push(stockOutcome);
 		} else {									/*Bonds are chosen*/
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
+			resultList.push(bondsOutcome);
 		}
 	}
 };
@@ -433,11 +436,6 @@ function helpTextShow() {
 /* Checking and collecting bonus, displays error if budget is not met, and requires confirmation for small bonus allocations */
 function bonusCollector() {
 	
-	
-	
-	
-	
-	
 	if (doubleCheck === true && remainingBonus >= 90) {
 		dataCollector();
 		nextPage();
@@ -464,24 +462,28 @@ function dataCollector() {
 	var bonusList = [];
 	
 	for (var x = 1; x < 4; x++) {
-		bonusList.push($("#bonus" + i).val());
+		bonusList.push($("#bonus" + x).val());
 	};
 	
 	
-	ref.push( {
-		"compPersonEV": expectedValueList[indexComp],
-		"compPersonDecision": decisionList[indexComp],
-		"compPersonChoice": choiceList[indexComp],
-		"compPersonBonus": bonusList[indexComp],
-		"avgPersonEV": expectedValueList[indexAvg],
-		"avgPersonDecision": decisionList[indexAvg],
-		"avgPersonChoice": choiceList[indexAvg],
-		"avgPersonBonus": bonusList[indexAvg],
-		"incompPersonEV": expectedValueList[indexIncomp],
-		"incompPersonDecision": decisionList[indexIncomp],
-		"incompPersonChoice": choiceList[indexIncomp],
-		"incompPersonBonus": bonusList[indexIncomp],
-	});
+	dataList.push(trialCounter);
+	dataList.push(expectedValueList[indexComp]);
+	dataList.push(decisionList[indexComp]);
+	dataList.push(choiceList[indexComp]);
+	dataList.push(resultList[indexComp]);
+	dataList.push(bonusList[indexComp]);
+	
+	dataList.push(expectedValueList[indexAvg]);
+	dataList.push(decisionList[indexAvg]);
+	dataList.push(choiceList[indexAvg]);
+	dataList.push(resultList[indexAvg]);
+	dataList.push(bonusList[indexAvg]);
+	
+	dataList.push(expectedValueList[indexIncomp]);
+	dataList.push(decisionList[indexIncomp]);
+	dataList.push(choiceList[indexIncomp]);
+	dataList.push(resultList[indexIncomp]);
+	dataList.push(bonusList[indexIncomp]);
 };
 
 
@@ -534,6 +536,7 @@ function move() {
 /* Collects promotion data and displays final page */
 function promoFunc(event) {
 	promoted = personalityList[(event.data.param)];
+	dataList.push(promoted);
 	nextPage();
 	$("#nextButton1").show();
 	$("#nextButton1").html("Submit");
@@ -542,14 +545,21 @@ function promoFunc(event) {
 /* Page 8*/
 /* Collects survey data */
 function surveyCollector() {
-	competence = document.querySelector('input[name="competence"]:checked').value;
-	decisionQuality = document.querySelector('input[name="decisionQuality"]:checked').value;
-	outcomeQuality = document.querySelector('input[name="outcomeQuality"]:checked').value;
+	competenceQ = document.querySelector('input[name="competence"]:checked').value;
+	decisionQ = document.querySelector('input[name="decisionQuality"]:checked').value;
+	outcomeQ = document.querySelector('input[name="outcomeQuality"]:checked').value;
+	
+	
+	
+	dataList.push(competenceQ);
+	dataList.push(decisionQ);
+	dataList.push(outcomeQ);
+	
+	ref.push(dataList);
+	
+	$("#nextButton1").hide();
+	pageTurner();
 }
-
-
-
-
 
 
 
