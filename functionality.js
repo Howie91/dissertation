@@ -138,8 +138,9 @@ function instructionOk() {
 /* Randomising investment alternatives and calling choice maker function */
 function portfolioRandomisation() {
 		
-	choiceList = [];
 	decisionList = [];
+	choiceList = [];
+	expectedValueList = [];
 	
 	for (i = 0; i < personalityList.length; i++) {
 		
@@ -184,6 +185,7 @@ function portfolioRandomisation() {
 		expectedValue = (firstProb / 100) * firstOutcome + 
 						(secondProb / 100) * secondOutcome;
 		
+		expectedValueList.push(expectedValue);
 		
 		/* Adding bad luck to competent banker, and good luck to incompetent */
 		if (personalityList[i] === "competent") {
@@ -328,7 +330,7 @@ function bonusUpdater() {
 
 /* Updates numbers displayed to user */
 function displayUpdater() {
-	for (var i = 1; i < displayList.length + 1; i++) {
+	for (var i = 1; i < 3 + 1; i++) {
 		if ($("#bonus" + i).val() > 0) {
 			$("#bonusDisplay" + i).html("$" + $("#bonus" + i).val() + ",000");
 		} else {
@@ -432,11 +434,12 @@ function helpTextShow() {
 function bonusCollector() {
 	
 	
-	/* Code for storing bonus-data */
+	
 	
 	
 	
 	if (doubleCheck === true && remainingBonus >= 90) {
+		dataCollector();
 		nextPage();
 		$("#helpText").hide();
 		$("#infoNext").hide();
@@ -444,6 +447,7 @@ function bonusCollector() {
 	}
 	
 	if (remainingBonus < 90 && remainingBonus >= 0) {
+		dataCollector();
 		nextPage()
 		$("#helpText").hide();
 		$("#infoNext").hide();
@@ -454,6 +458,31 @@ function bonusCollector() {
 		doubleCheck = true;
 	}
 }
+
+/* Collects and stores trial data to Firebase */
+function dataCollector() {
+	var bonusList = [];
+	
+	for (var x = 1; x < 4; x++) {
+		bonusList.push($("#bonus" + i).val());
+	};
+	
+	
+	ref.push( {
+		"compPersonEV": expectedValueList[indexComp],
+		"compPersonDecision": decisionList[indexComp],
+		"compPersonChoice": choiceList[indexComp],
+		"compPersonBonus": bonusList[indexComp],
+		"avgPersonEV": expectedValueList[indexAvg],
+		"avgPersonDecision": decisionList[indexAvg],
+		"avgPersonChoice": choiceList[indexAvg],
+		"avgPersonBonus": bonusList[indexAvg],
+		"incompPersonEV": expectedValueList[indexIncomp],
+		"incompPersonDecision": decisionList[indexIncomp],
+		"incompPersonChoice": choiceList[indexIncomp],
+		"incompPersonBonus": bonusList[indexIncomp],
+	});
+};
 
 
 /* Resets and prepares for new trial */
@@ -566,6 +595,9 @@ var trialCounter = 1;
 var personalityList = ["competent", "average", "incompetent"];
 
 
+var dataList = [];
+
+
 /* Page 3 Variables */
 var usereducation
 var usergender 
@@ -585,10 +617,6 @@ var remainingBonus = 100;
 var bonusBanker1 = 0;
 var bonusBanker2 = 0;
 var bonusBanker3 = 0;
-
-var bonusList = ["bonus1", "bonus2", "bonus3"];
-var bankerList = ["bonusBanker1", "bonusBanker2", "bonusBanker3"];
-var displayList = ["bonusDisplay1", "bonusDisplay2", "bonusDisplay3"];
 
 var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -651,6 +679,11 @@ $(document).ready(function() {
 /* Randomising positions of banker personalities */
 $(document).ready(function() {
 	shuffle(personalityList);
+	
+	indexComp = personalityList.indexOf("competent");
+	indexAvg = personalityList.indexOf("average");
+	indexIncomp = personalityList.indexOf("incompetent");
+	
 });
 
 
