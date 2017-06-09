@@ -519,7 +519,7 @@ function requestData() {
 function move() {
   var elem = document.getElementById("progressBar");   
   var width = 0;
-  var id = setInterval(frame, 3);
+  var id = setInterval(frame, 20);
   function frame() {
     if (width >= 100) {
       clearInterval(id);
@@ -609,10 +609,10 @@ var dataList = [];
 
 
 /* Page 3 Variables */
-var usereducation
-var usergender 
-var username 
-var userage 
+var usereducation;
+var usergender;
+var username;
+var userage;
 
 
 /* Page 4 variables */
@@ -643,6 +643,44 @@ var outcomeQuality = -1;
 
 
 /* Generic code running when page has loaded */
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10){
+	dd='0'+dd;
+} 
+
+if(mm<10){
+	mm='0'+mm;
+} 
+
+var currentDay = dd + '/' + mm + '/' + yyyy;
+
+
+var hours = today.getHours();
+var minutes = today.getMinutes();
+var seconds = today.getSeconds();
+
+if (hours < 10){
+	hours = '0' + hours;
+}
+
+if (minutes < 10){
+	minutes = '0' + minutes;
+}
+
+if (seconds < 10){
+	seconds = '0' + seconds;
+}
+
+var currentTime = hours + ":" + minutes + ":" + seconds;
+
+dataList.push(currentDay);
+dataList.push(currentTime);
+
 
 /* Randomising banker names */
 var nameList = ["Harry", "Matt", "Oliver", "Jack", "Charlie", "Thomas", "Jacob", "James", "Josh", "William",

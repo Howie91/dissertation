@@ -130,13 +130,13 @@ h2 {
 }
 
 #helpText {
-	margin-top: 145%;
+	margin-top: 105%;
 	margin-left: auto;
 	margin-right: auto;
-	margin-bottom: 5%;
-	border-margin: 5px;
+	margin-bottom: 15%;
+	border-radius: 5px;
 	padding: 2%;
-	width: 90%;
+	width: 80%;
 	border: 1px black solid;
 	background-color: #b2fff3;
 	
