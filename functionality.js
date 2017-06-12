@@ -163,12 +163,12 @@ function portfolioRandomisation() {
 	
 		if (extreme) {
 			firstProb = (Math.floor(Math.random() * 3) + 1) * 10;
-			firstOutcome = (Math.floor(Math.random() * 10) + 11);
-			secondOutcome = (Math.floor(Math.random() * 3) + 5);
+			firstOutcome = (Math.floor(Math.random() * 7) + 13);
+			secondOutcome = (Math.floor(Math.random() * 4) + 3);
 		} else {
 			firstProb = (Math.floor(Math.random() * 4) + 3) * 10;
-			firstOutcome = (Math.floor(Math.random() * 4) + 11);
-			secondOutcome = (Math.floor(Math.random() * 2) + 8);
+			firstOutcome = (Math.floor(Math.random() * 3) + 11);
+			secondOutcome = (Math.floor(Math.random() * 3) + 7);
 		}
 		
 		secondProb = 100 - firstProb;
@@ -400,7 +400,7 @@ function nextInfo() {
 	
 	if (page5counter === 1) {
 		choiceDisplay();
-		$("#instructionsPage5").html("The investment decisions have been made, and the chosen alternatives now have red backgrounds. Click 'Next' to reveal the outcomes.");
+		$("#instructionsPage5").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background. Click 'Next' to reveal the outcomes.");
 	} else if (page5counter === 2) {
 		$(".outcome").show();
 		$(".result").show();
@@ -519,7 +519,7 @@ function requestData() {
 function move() {
   var elem = document.getElementById("progressBar");   
   var width = 0;
-  var id = setInterval(frame, 20);
+  var id = setInterval(frame, 12);
   function frame() {
     if (width >= 100) {
       clearInterval(id);

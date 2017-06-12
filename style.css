@@ -191,9 +191,17 @@ legend {
 	font-weight: bold;
 }
 
+#email {
+	font-size: 1em;
+	color: black;
+}
+
+#consentList {
+	margin-bottom: 5%;
+}
+
 
 /* Page 5 */
-
 .divTable{
 	display: table;
 	width: 94%;
