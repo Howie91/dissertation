@@ -1,4 +1,3 @@
-
 /* Background */
 body {
 	background-color: #f4f8ff;
@@ -275,7 +274,6 @@ legend {
 
 
 /* Bonus sliders */
-
 input[type=range] {
 	-webkit-appearance: none;
 	margin: 10px 0;

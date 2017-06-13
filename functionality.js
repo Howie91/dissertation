@@ -102,8 +102,8 @@ function demographicsChecker() {
 
 /* Updating remaining experiment with participant's name */
 function nameUpdater() {
-	document.getElementById("withUN").textContent = username;
-	document.getElementById("withUserName").textContent = username;
+	$("#withUN").innerHTML = username;
+	$("#withUserName").innerHTML = username;
 }
 
 
@@ -173,7 +173,7 @@ function portfolioRandomisation() {
 		
 		secondProb = 100 - firstProb;
 		
-		outcomeProbs = firstProb + "%: $" + firstOutcome + ".0m</br>" + 
+		outcomeProbs = firstProb + "%: $" + firstOutcome + ".0m<br>" + 
 						secondProb + "%: $" + secondOutcome + ".0m";
 						
 		bondsProb = "100%: $10.1m";
@@ -404,10 +404,10 @@ function nextInfo() {
 	} else if (page5counter === 2) {
 		$(".outcome").show();
 		$(".result").show();
-		$("#instructionsPage5").html("The results are out! </br> Click 'Next' to proceed.");
+		$("#instructionsPage5").html("The results are out! <br> Click 'Next' to proceed.");
 	} else if (page5counter === 3) {
 		$(".bonus"). show();
-		$("#instructionsPage5").html("Now, please allocate the bonus based on the information available. </br> Click 'Submit' to send your allocations to HR for it to be added to their next pay check.");
+		$("#instructionsPage5").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next pay check.");
 		$("#infoNext").html("Submit");
 		if (helpTextShown === false){
 			helpTextTime();
@@ -502,7 +502,7 @@ function trialReset() {
 		"backgroundColor": "#4cfff6",
 		"fontWeight": "normal"
 	});
-	$("#instructionsPage5").html("Again, carefully consider the options available to each banker.</br>Click 'Next' to reveal their choices.");
+	$("#instructionsPage5").html("Again, carefully consider the options available to each banker.<br>Click 'Next' to reveal their choices.");
 }
 
 
