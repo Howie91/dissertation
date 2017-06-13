@@ -3,9 +3,10 @@
 /* Calling page-relevant functions */
 function nextPage() {
 	if (currentPage === 1) {
-		pageTurner();
-	} else if (currentPage === 2) {
 		consentChecker();
+	} else if (currentPage === 2) {
+		$("#nextButton1").html("Send");
+		pageTurner();
 	} else if (currentPage === 3) {
 		demographicsChecker();
 	} else if (currentPage === 4) {
@@ -37,12 +38,11 @@ function shuffle(o) {
 };
 	
 
-/* Page 2 */
+/* Page 1 */
 /* Checks whether consent has been provided */
 function consentChecker() {
 	if ($("#consentCheck").is(":checked")) {
 		pageTurner()
-		$("#nextButton1").html("Send");
 	} else {
 		$("#consentError").show()
 	}
@@ -102,8 +102,8 @@ function demographicsChecker() {
 
 /* Updating remaining experiment with participant's name */
 function nameUpdater() {
-	$("#withUN").innerHTML = username;
-	$("#withUserName").innerHTML = username;
+	$("#withUN").html(username);
+	$("#withUserName").html(username);
 }
 
 
