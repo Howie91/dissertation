@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
-
-
 <html>
 	<head>
 		<title>Greenfield Capital Management</title>
 		<link rel="stylesheet" href="style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
 		<script type="text/javascript" src="functionality.js" ></script>
 	</head>
 	
@@ -17,7 +15,7 @@
 		</div>
 		
 	
-		<div class="sideContainer">
+		<div id="sideContainer">
 			<a class="nextButton" id="nextButton1" href="#">Next</a>		
 			<p id="helpText"><b>Remember:</b><br>There is no right or wrong way to distribute the bonus. Take into account the information you think is important and 
 				award each employee with the bonus you think they deserve.</p>
@@ -36,7 +34,7 @@
 				<p>Please note that:</p>
 				<p>All data will be handled according to the UK Data Protection Act 1998 and will be kept anonymous, such that your individual responses will not be traceable back to you.<br>
 				If you wish to withdraw from the experiment you can do so at any time by closing the tab or the browser.<br>
-				Any questions about this experiments can be sent to <a href="mailto:havard.brittmark.16@ucl.ac.uk" id="email">'havard.brittmark.16@ucl.ac.uk'</a>.</p>
+				Any questions about this experiments can be sent to <a href="mailto:havard.brittmark.16@ucl.ac.uk" class="email">'havard.brittmark.16@ucl.ac.uk'</a>.</p>
 			</div>
 			<div>
 				<input type="checkbox" id="consentCheck">
@@ -80,13 +78,13 @@
 			
 			<div class="userForm" id="nameDiv">
 				<fieldset>
-					<legend>First Name:</legend>
+					<legend>First Name/Nickname:</legend>
 					<div>
 						<input type="text" name="userName" id="un"/>
 					</div>
 				</fieldset>
 				<div class="error" id="nameError">
-					<p>HR really needs your name in order to proceed.</p>
+					<p>It would be nice to know what we can call you. One letter is enough!</p>
 				</div>
 			</div>
 			
@@ -107,12 +105,12 @@
 					<legend>Gender:</legend>
 					<div>
 						<div>	
-							<input type="radio" value="male" name="gender">
-							<label>Male</label>
+							<input type="radio" value="male" name="gender" id="man">
+							<label for="man">Male</label>
 						</div>
 						<div>
-							<input type="radio" value="female" name="gender">
-							<label>Female</label>
+							<input type="radio" value="female" name="gender" id="woman">
+							<label for="woman">Female</label>
 						</div>
 					</div>
 				</fieldset>
@@ -126,20 +124,20 @@
 					<legend>Education:</legend>
 					<div>
 						<div>	
-							<input type="radio" value="middleSchool" name="education">
-							<label>Middle School</label>
+							<input type="radio" value="middleSchool" name="education" id="mSchool">
+							<label for="mSchool">Middle School</label>
 						</div>
 						<div>
-							<input type="radio" value="highSchool" name="education">
-							<label>High School</label>
+							<input type="radio" value="highSchool" name="education" id="hSchool">
+							<label for="hSchool">High School</label>
 						</div>
 						<div>
-							<input type="radio" value="undergrad" name="education">
-							<label>Undergraduate Degree</label>
+							<input type="radio" value="undergrad" name="education" id="uDegree">
+							<label for="uDegree">Undergraduate Degree</label>
 						</div>
 						<div>
-							<input type="radio" value="postgrad" name="education">
-							<label>Postgraduate Degree</label>
+							<input type="radio" value="postgrad" name="education" id="pDegree">
+							<label for="pDegree">Postgraduate Degree</label>
 						</div>
 					</div>
 				</fieldset>
@@ -173,8 +171,8 @@
 		
 		
 		<div class="content" id="page5">
-			<p id="instructionsPage5">The potential outcomes for each investment option, based on a $10m investment, are displayed below. 
-			A number above $10m implies a gain, a number below $10m implies a loss.
+			<p id="instructionsPage5">Displayed below are the potential outcomes for each investment option, based on a $10m investment. 
+			The percentages represent the likelihood of each outcome. A number above $10m implies a gain, a number below $10m implies a loss.
 			<br><br>Carefully consider the options available to each banker. Then click 'Next' to reveal their choices.</p>
 			<div id="experimentImages">
 				<div class="image">
@@ -286,74 +284,74 @@
 			<div class="wrap">
 				<form action="">
 					<label class="statement">Competence</label>
-					<ul class='likert'>
+				<ul class='likert'>
 				  <li>
-					<input type="radio" name="competence" value="4">
-					<label>Very important</label>
-				  </li>
-				  <li>
-					<input type="radio" name="competence" value="3">
-					<label>Important</label>
-				  </li>
-				  <li>
-					<input type="radio" name="competence" value="2">
-					<label>Somewhat important</label>
+					<input type="radio" name="competence" value="0">
+					<label>Totally irrelevant</label>
 				  </li>
 				  <li>
 					<input type="radio" name="competence" value="1">
 					<label>Not important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="competence" value="0">
-					<label>Totally irrelevant</label>
+					<input type="radio" name="competence" value="2">
+					<label>Somewhat important</label>
+				  </li>
+				  <li>
+					<input type="radio" name="competence" value="3">
+					<label>Important</label>
+				  </li>
+				  <li>
+					<input type="radio" name="competence" value="4">
+					<label>Very important</label>
 				  </li>
 				</ul>
 				<div class="borderBottom"></div>
 				<label class="statement">Quality of decision-making process</label>
 				<ul class='likert'>
 				  <li>
-					<input type="radio" name="decisionQuality" value="4">
-					<label>Very important</label>
-				  </li>
-				  <li>
-					<input type="radio" name="decisionQuality" value="3">
-					<label>Important</label>
-				  </li>
-				  <li>
-					<input type="radio" name="decisionQuality" value="2">
-					<label>Somewhat important</label>
+					<input type="radio" name="decisionQuality" value="0">
+					<label>Totally irrelevant</label>
 				  </li>
 				  <li>
 					<input type="radio" name="decisionQuality" value="1">
 					<label>Not important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="decisionQuality" value="0">
-					<label>Totally irrelevant</label>
+					<input type="radio" name="decisionQuality" value="2">
+					<label>Somewhat important</label>
+				  </li>
+				  <li>
+					<input type="radio" name="decisionQuality" value="3">
+					<label>Important</label>
+				  </li>
+				  <li>
+					<input type="radio" name="decisionQuality" value="4">
+					<label>Very important</label>
 				  </li>
 				</ul>
 				<div class="borderBottom"></div>
 				<label class="statement">Goodness of outcome</label>
 				<ul class='likert'>
 				  <li>
-					<input type="radio" name="outcomeQuality" value="4">
-					<label>Very important</label>
-				  </li>
-				  <li>
-					<input type="radio" name="outcomeQuality" value="3">
-					<label>Important</label>
-				  </li>
-				  <li>
-					<input type="radio" name="outcomeQuality" value="2">
-					<label>Somewhat important</label>
+					<input type="radio" name="outcomeQuality" value="0">
+					<label>Totally irrelevant</label>
 				  </li>
 				  <li>
 					<input type="radio" name="outcomeQuality" value="1">
 					<label>Not important</label>
 				  </li>
 				  <li>
-					<input type="radio" name="outcomeQuality" value="0">
-					<label>Totally irrelevant</label>
+					<input type="radio" name="outcomeQuality" value="2">
+					<label>Somewhat important</label>
+				  </li>
+				  <li>
+					<input type="radio" name="outcomeQuality" value="3">
+					<label>Important</label>
+				  </li>
+				  <li>
+					<input type="radio" name="outcomeQuality" value="4">
+					<label>Very important</label>
 				  </li>
 				</ul>
 			  </form>
@@ -364,9 +362,12 @@
 		
 		<div class="content" id="page9">
 			<h2>Thank you!</h2>
-			<p>Your time working for Greenfield Capital Management is over, and we really appreciate your contribution to both our company and science!</p>
+			<p>Your time working for Greenfield Capital Management is over, and we really appreciate your contribution to science!</p>
+			<p>The study you have just taken part in aims to explore how people evaluate other people's decision, 
+			and whether a random outcome overshadow the actual decision quality. If you have any thoughts or opinions about this experiment 
+			I would be very happy if you sent me an email: <a href="mailto:havard.brittmark.16@ucl.ac.uk" class="email">'havard.brittmark.16@ucl.ac.uk'</a>.</p>
 			<p>After a cake session with <span class="name1">name1</span>, 
-			<span class="name2">name2</span> and <span class="name3">name3</span>, they wave goodbye.</p>
+			<span class="name2">name2</span> and <span class="name3">name3</span>, they all wave farewell.</p>
 			<p>Please close the tab or your browser to end the experiment</p>
 			<div id="introImages">
 				<div class="image">
@@ -383,6 +384,15 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="content" id="IEerror">
+			<h2>Woops!</h2>
+			<p>It seems like you are using Internet Explorer! Unfortunately, Internet Explorer does not support the necessary features to run this experiment.</p>
+			<p>Please try again with any other browser.</p>
+		</div>
+		
+		
+		
 		
 	</body>
 </html>

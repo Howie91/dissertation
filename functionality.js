@@ -53,7 +53,7 @@ function consentChecker() {
 /* Checking and collecting demographics information */
 function demographicsChecker() {
 	username = document.getElementById("un").value;
-	if (username.length < 3) {
+	if (username.length < 1) {
 		$("#nameError").show()
 	} else {
 		$("#nameError").hide()
@@ -80,7 +80,7 @@ function demographicsChecker() {
 		$("#eduError").show()
 	}
 	
-	if (username.length > 3 && userage > 14 && userage < 81 &&
+	if (username.length > 0 && userage > 14 && userage < 81 &&
 		usergender.length > 3 && usereducation.length > 3) {
 		
 		dataList.push(userage);
@@ -124,7 +124,7 @@ function instructionsChecker() {
 
 
 function instructionsTimer() {
-	var timer = setTimeout(instructionOk, 20000); /* Set time requirement here */
+	var timer = setTimeout(instructionOk, 30000); /* Set time requirement here */
 }
 
 function instructionOk() {
@@ -269,21 +269,21 @@ function choiceMaker(i, m) {
 		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
-			resultList.push(stockOutcome);
+			resultList.push(stockOutcome.slice(1, stockOutcome.length - 1));
 		} else {									/*Bonds are chosen*/
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
-			resultList.push(bondsOutcome);
+			resultList.push(bondsOutcome.slice(1, bondsOutcome.length - 1));
 		}
 	} else {
 		if (expectedValue <= 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
-			resultList.push(stockOutcome);
+			resultList.push(stockOutcome.slice(1, stockOutcome.length - 1));
 		} else {									/*Bonds are chosen*/
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
-			resultList.push(bondsOutcome);
+			resultList.push(bondsOutcome.slice(1, bondsOutcome.length - 1));
 		}
 	}
 };
@@ -735,6 +735,13 @@ $(document).ready(function() {
 });
 
 
+$(document).ready(function() {
+	if (navigator.userAgent.match(/msie/i) || navigator.userAgent.match(/trident/i) ){
+		$("#page1").hide();
+		$("#sideContainer").hide();
+		$("#IEerror").show();
+	}
+});
 
 /* Initialize Firebase */
 $(document).ready(function() {
