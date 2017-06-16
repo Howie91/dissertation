@@ -549,13 +549,18 @@ function surveyCollector() {
 	decisionQ = document.querySelector('input[name="decisionQuality"]:checked').value;
 	outcomeQ = document.querySelector('input[name="outcomeQuality"]:checked').value;
 	
-	
-	
 	dataList.push(competenceQ);
 	dataList.push(decisionQ);
 	dataList.push(outcomeQ);
 	
 	ref.push(dataList);
+	
+	
+	/* Generating, storing and displaying HIT Approval Code */
+	var approvalCode = Math.random().toString(36).slice(-8);
+	firebase.database().ref('Approval Codes').push(approvalCode);
+	$("#approvalCode").html(approvalCode);
+	
 	
 	$("#nextButton1").hide();
 	pageTurner();
@@ -753,9 +758,9 @@ $(document).ready(function() {
 	storageBucket: "the-bonus-experiment.appspot.com",
 	messagingSenderId: "146625832163"
 	};
-	firebase.initializeApp(config);
+	firebase.initializeApp(config);	
 	
 	database = firebase.database();
-	ref = database.ref('rawData');	
+	ref = database.ref('Experimental Data');	
 });
 

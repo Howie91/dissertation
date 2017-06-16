@@ -486,3 +486,12 @@ form .likert li label {
 	width:100%;
 	font-size: 0.8em;
 }
+
+
+/* Page 9 */
+#approvalCode {
+	font-size: 1.2em;
+	font-weight: bold;
+	background-color: white;
+	border: 1px solid black;
+}
