@@ -59,7 +59,8 @@ function demographicsChecker() {
 		$("#nameError").hide()
 	}
 		
-	var userage = document.getElementById("ua").value;
+	var age = document.getElementById("ua").value;
+	var userage = parseInt(age);
 	if (userage < 15 || userage > 80) {
 		$("#ageError").show()
 	} else {
@@ -135,7 +136,15 @@ function instructionOk() {
 /* Page 5 */
 /* Randomising investment alternatives and calling choice maker function */
 function portfolioRandomisation() {
-		
+	
+	firstProbList = [];
+	firstOutcomeList = [];
+	secondProbList = [];
+	secondOutcomeList = [];
+	
+	stockOutcomeList = [];
+	bondOutcomeList = [];
+	
 	decisionList = [];
 	choiceList = [];
 	expectedValueList = [];
@@ -173,6 +182,12 @@ function portfolioRandomisation() {
 		
 		secondProb = 100 - firstProb;
 		
+		firstProbList.push(firstProb);
+		firstOutcomeList.push(firstOutcome);
+		secondProbList.push(secondProb);
+		secondOutcomeList.push(secondOutcome);
+		
+		
 		outcomeProbs = firstProb + "%: $" + firstOutcome + ".0m<br>" + 
 						secondProb + "%: $" + secondOutcome + ".0m";
 						
@@ -184,7 +199,8 @@ function portfolioRandomisation() {
 		expectedValue = (firstProb / 100) * firstOutcome + 
 						(secondProb / 100) * secondOutcome;
 		
-		expectedValueList.push(expectedValue);
+		roundedExpectedValue = Math.round( expectedValue * 10 ) / 10
+		expectedValueList.push(roundedExpectedValue);
 		
 		/* Adding bad luck to competent banker, and good luck to incompetent */
 		if (personalityList[i] === "competent") {
@@ -219,8 +235,14 @@ function portfolioRandomisation() {
 			outcomeList.push(secondOutcome);
 		}
 		
+		stockResult = outcomeList[Math.floor(Math.random() * outcomeList.length)]
+		stockOutcome = "$" + stockResult + ".0m";
 		
-		stockOutcome = "$" + outcomeList[Math.floor(Math.random() * outcomeList.length)] + ".0m";
+		bondsResult = 10.1;
+		
+		stockOutcomeList.push(stockResult);
+		bondOutcomeList.push(bondsResult);
+		
 		
 		m = i + 1;
 		
@@ -269,21 +291,21 @@ function choiceMaker(i, m) {
 		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
-			resultList.push(stockOutcome.slice(1, stockOutcome.length - 1));
+			resultList.push(parseFloat(stockOutcome.slice(1, stockOutcome.length - 1)));
 		} else {									/*Bonds are chosen*/
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
-			resultList.push(bondsOutcome.slice(1, bondsOutcome.length - 1));
+			resultList.push(parseFloat(bondsOutcome.slice(1, bondsOutcome.length - 1)));
 		}
 	} else {
 		if (expectedValue <= 10.1) { 				/*Stocks are chosen*/
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
-			resultList.push(stockOutcome.slice(1, stockOutcome.length - 1));
+			resultList.push(parseFloat(stockOutcome.slice(1, stockOutcome.length - 1)));
 		} else {									/*Bonds are chosen*/
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
-			resultList.push(bondsOutcome.slice(1, bondsOutcome.length - 1));
+			resultList.push(parseFloat(bondsOutcome.slice(1, bondsOutcome.length - 1)));
 		}
 	}
 };
@@ -462,24 +484,42 @@ function dataCollector() {
 	var bonusList = [];
 	
 	for (var x = 1; x < 4; x++) {
-		bonusList.push($("#bonus" + x).val());
+		bonusList.push(parseFloat($("#bonus" + x).val()));
 	};
 	
-	
 	dataList.push(trialCounter);
+	
+	dataList.push(firstProbList[indexComp]);
+	dataList.push(firstOutcomeList[indexComp]);
+	dataList.push(secondProbList[indexComp]);
+	dataList.push(secondOutcomeList[indexComp]);
 	dataList.push(expectedValueList[indexComp]);
+	dataList.push(stockOutcomeList[indexComp]);
+	dataList.push(bondOutcomeList[indexComp]);
 	dataList.push(decisionList[indexComp]);
 	dataList.push(choiceList[indexComp]);
 	dataList.push(resultList[indexComp]);
 	dataList.push(bonusList[indexComp]);
 	
+	dataList.push(firstProbList[indexAvg]);
+	dataList.push(firstOutcomeList[indexAvg]);
+	dataList.push(secondProbList[indexAvg]);
+	dataList.push(secondOutcomeList[indexAvg]);
 	dataList.push(expectedValueList[indexAvg]);
+	dataList.push(stockOutcomeList[indexAvg]);
+	dataList.push(bondOutcomeList[indexAvg]);
 	dataList.push(decisionList[indexAvg]);
 	dataList.push(choiceList[indexAvg]);
 	dataList.push(resultList[indexAvg]);
 	dataList.push(bonusList[indexAvg]);
 	
+	dataList.push(firstProbList[indexIncomp]);
+	dataList.push(firstOutcomeList[indexIncomp]);
+	dataList.push(secondProbList[indexIncomp]);
+	dataList.push(secondOutcomeList[indexIncomp]);
 	dataList.push(expectedValueList[indexIncomp]);
+	dataList.push(stockOutcomeList[indexIncomp]);
+	dataList.push(bondOutcomeList[indexIncomp]);
 	dataList.push(decisionList[indexIncomp]);
 	dataList.push(choiceList[indexIncomp]);
 	dataList.push(resultList[indexIncomp]);

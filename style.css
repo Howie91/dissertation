@@ -43,7 +43,7 @@ h2 {
 	height: auto;
 }
 
-#experimentImages {
+.experimentImages {
 	width: 70%;
 	margin: auto;
 }
@@ -492,6 +492,6 @@ form .likert li label {
 #approvalCode {
 	font-size: 1.2em;
 	font-weight: bold;
-	background-color: white;
+	padding: 2px;
 	border: 1px solid black;
 }
