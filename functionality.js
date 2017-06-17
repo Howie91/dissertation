@@ -593,6 +593,54 @@ function surveyCollector() {
 	dataList.push(decisionQ);
 	dataList.push(outcomeQ);
 	
+	// Calculating end time
+	var stillToday = new Date();
+	
+	var endHours = stillToday.getHours();
+	var endMinutes = stillToday.getMinutes();
+	var endSeconds = stillToday.getSeconds();
+
+	
+	// Calculating number of minutes and seconds used
+	var hoursSpent = endHours - hours;
+	var minutesSpent = endMinutes - minutes;
+	var secondsSpent = endSeconds - seconds;
+	
+	if (hoursSpent === 1) {
+		minutesSpent += 60;
+	}
+	
+	if (secondsSpent < 0) {
+		minutesSpent -= 1;
+		secondsSpent += 60;
+	}
+	
+	if (minutesSpent < 10){
+		minutesSpent = '0' + minutesSpent;
+	}
+
+	if (secondsSpent < 10){
+		secondsSpent = '0' + secondsSpent;
+	}
+	
+	var timeSpent = minutesSpent + ":" + secondsSpent;
+	
+	// Calculating end time
+	if (endHours < 10){
+		endHours = '0' + endHours;
+	}
+
+	if (endMinutes < 10){
+		endMinutes = '0' + endMinutes;
+	}
+
+	if (endSeconds < 10){
+		endSeconds = '0' + endSeconds;
+	}
+
+	endTime = endHours + ":" + endMinutes + ":" + endSeconds;
+	dataList.splice(2, 0, endTime, timeSpent);
+	
 	ref.push(dataList);
 	
 	
