@@ -29,20 +29,22 @@
 			<p>Thank you for your interest in this experiment.</p> 
 			<p> You will soon act as a manager for a small team of bankers, but before we get proceed, please read the Consent Form carefully.</p>
 			
-			<h3>Consent Form</h3>
-			<div id="consentList">
-				<p>Please note that:</p>
-				<p>All data will be handled according to the UK Data Protection Act 1998 and will be kept anonymous, such that your individual responses will not be traceable back to you.<br>
-				If you wish to withdraw from the experiment you can do so at any time by closing the tab or the browser.<br>
-				Any questions about this experiments can be sent to <a href="mailto:havard.brittmark.16@ucl.ac.uk" class="email">'havard.brittmark.16@ucl.ac.uk'</a>.</p>
-			</div>
-			<div>
-				<input type="checkbox" id="consentCheck">
-				<label for="consentCheck">
-					I confirm that I understand and accept the terms above.
-				</label>
-				<p class="error" id="consentError">Please read through the consent form and tick 
-				the box if you agree to the conditions.</p>
+			<div id="consentForm">
+				<h3>Consent Form</h3>
+				<div id="consentList">
+					<p>Please note that:</p>
+					<p>All data will be handled according to the UK Data Protection Act 1998 and will be kept anonymous, such that your individual responses will not be traceable back to you.<br>
+					If you wish to withdraw from the experiment you can do so at any time by closing the tab or the browser.<br>
+					Any questions about this experiments can be sent to <a href="mailto:havard.brittmark.16@ucl.ac.uk" class="email">'havard.brittmark.16@ucl.ac.uk'</a>.</p>
+				</div>
+				<div>
+					<input type="checkbox" id="consentCheck">
+					<label for="consentCheck">
+						I confirm that I understand and accept the terms above.
+					</label>
+					<p class="error" id="consentError">Please read through the consent form and tick 
+					the box if you agree to the conditions.</p>
+				</div>
 			</div>
 		</div>
 		
@@ -151,20 +153,20 @@
 		<div class="content" id="page4">
 			<p>Brilliant, <span id="withUN">userName</span>! Now that HR is happy it is time 
 			to have a look at your job description.</p>
-			<h3>Job Description</h3>
-			<p>You have already been introduced to your team. This is our highest performering bankers and you have 
+			<h3 class="description1">Job Description</h3>
+			<p class="description1">You have already been introduced to your team. This is our highest performering bankers and you have 
 			the pleasure of managing them for the next 12 months. Greenfield Capital Management's 
 			goal is to maximise long-term profits for our shareholders and thus we are prepared for short-term losses.</p>
-			<p>The bankers' job is fairly straightforward. Each month they receive $10m in fresh cash from our investors 
+			<p class="description2">The bankers' job is fairly straightforward. Each month they receive $10m in fresh cash from our investors 
 			and they then have to decide whether to invest the $10m in either;</p>
-			<p>1. A risky stock portfolio in their respective market.
+			<p class="description2">1. A risky stock portfolio in their respective market.
 			<br>2. Risk-free government bonds.</p>
-			<p>If invested in stocks, the value of the investment will either increase or decrease. 
+			<p class="description3">If invested in stocks, the value of the investment will either increase or decrease. 
 			Luckily, our analytics department has developed an astonishing algorithm that calculates the potential outcomes and the likelihood that each outcome will occur.</p>
-			<p>If invested in bonds, the investment will increase by the promised amount of $0.1m with 100% certainty.</p>
-			<p>To keep the bankers satisfied we pay them a bonus every month. Your job is simple, at the end of each month 
+			<p class="description3">If invested in bonds, the investment will increase by the promised amount of $0.1m with 100% certainty.</p>
+			<p class="description3">To keep the bankers satisfied we pay them a bonus every month. Your job is simple, at the end of each month 
 			you will allocate a total of $100,000 in bonuses between the three.</p>
-			<p><b>Please note:</b> The information provided by the analytics department is the only information the bankers have available, 
+			<p class="description4"><b>Please note:</b> The information provided by the analytics department is the only information the bankers have available, 
 			thus, you will have access to the exact same information as they do.</p>
 			<p id="instructionError" class="error">That was quick! Are you sure you are ready to proceed?</p>
 		</div>

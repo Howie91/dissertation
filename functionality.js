@@ -3,14 +3,14 @@
 /* Calling page-relevant functions */
 function nextPage() {
 	if (currentPage === 1) {
-		consentChecker();
+		consentDisplay();
 	} else if (currentPage === 2) {
 		$("#nextButton1").html("Send");
 		pageTurner();
 	} else if (currentPage === 3) {
 		demographicsChecker();
 	} else if (currentPage === 4) {
-		instructionsChecker();
+		instructionsTurner();
 	} else if (currentPage === 5) {
 		pageTurner();
 	} else if (currentPage === 6) {
@@ -39,6 +39,18 @@ function shuffle(o) {
 	
 
 /* Page 1 */
+/* Displays consent form */
+function consentDisplay() {
+	if (consentForm === 0) {
+		$("#consentForm").show();
+	} else {
+		consentChecker();
+	}
+	
+	consentForm += 1;
+}
+
+
 /* Checks whether consent has been provided */
 function consentChecker() {
 	if ($("#consentCheck").is(":checked")) {
@@ -109,6 +121,23 @@ function nameUpdater() {
 
 
 /* Page 4 */
+function instructionsTurner() {
+	if (instructionsDisplay === 1) {
+		$(".description1").show();
+	} else if (instructionsDisplay === 2) {
+		$(".description2").show();
+	} else if (instructionsDisplay === 3) {
+		$(".description3").show();
+	} else if (instructionsDisplay === 4) {
+		$(".description4").show();
+	} else {
+		instructionsChecker();
+	}
+	
+	instructionsDisplay += 1;
+	
+}
+
 /* Confirming whether sufficient time has been spent on reading instructions */
 function instructionsChecker() {
 	if (instructionCheck) {
@@ -262,7 +291,7 @@ function choiceMaker(i, m) {
 	choiceProbability = (Math.floor(Math.random() * 100));
 	
 	if (personalityList[i] === "competent") {
-		if (choiceProbability < 80) {
+		if (choiceProbability < 90) {
 			compPersonDecision = "correct";		
 		} else {
 			compPersonDecision = "incorrect";
@@ -270,7 +299,7 @@ function choiceMaker(i, m) {
 		choiceList.push(compPersonDecision);
 		
 	} else if (personalityList[i] === "average") {
-		if (choiceProbability < 65) {
+		if (choiceProbability < 50) {
 			avgPersonDecision = "correct";		
 		} else {
 			avgPersonDecision = "incorrect";
@@ -278,7 +307,7 @@ function choiceMaker(i, m) {
 		choiceList.push(avgPersonDecision);
 		
 	} else if (personalityList[i] === "incompetent") {
-		if (choiceProbability < 50) {
+		if (choiceProbability < 30) {
 			incompPersonDecision = "correct";		
 		} else {
 			incompPersonDecision = "incorrect";
@@ -700,8 +729,10 @@ var personalityList = ["competent", "average", "incompetent"];
 
 var dataList = [];
 
+/* Page 1 variables */
+var consentForm = 0;
 
-/* Page 3 Variables */
+/* Page 3 variables */
 var usereducation;
 var usergender;
 var username;
@@ -709,6 +740,7 @@ var userage;
 
 
 /* Page 4 variables */
+var instructionsDisplay = 1;
 var instructionCheck = false;
 
 
