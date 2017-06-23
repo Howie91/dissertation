@@ -12,14 +12,16 @@ function nextPage() {
 	} else if (currentPage === 4) {
 		instructionsTurner();
 	} else if (currentPage === 5) {
-		pageTurner();
+		quizCollector();
 	} else if (currentPage === 6) {
-		$("#page5").hide();
-		$("#page7").show();
-		currentPage++;
-	} else if (currentPage === 7) {
 		pageTurner();
+	} else if (currentPage === 7) {
+		$("#page6").hide();
+		$("#page8").show();
+		currentPage++;
 	} else if (currentPage === 8) {
+		pageTurner();
+	} else if (currentPage === 9) {
 		surveyCollector();
 	}
 }	
@@ -42,11 +44,11 @@ function shuffle(o) {
 /* Displays consent form */
 function consentDisplay() {
 	if (consentForm === 0) {
+		$("#welcome").hide();
 		$("#consentForm").show();
 	} else {
 		consentChecker();
 	}
-	
 	consentForm += 1;
 }
 
@@ -71,8 +73,7 @@ function demographicsChecker() {
 		$("#nameError").hide()
 	}
 		
-	var age = document.getElementById("ua").value;
-	var userage = parseInt(age);
+	var userage = document.getElementById("ua").value;
 	if (userage < 15 || userage > 80) {
 		$("#ageError").show()
 	} else {
@@ -96,7 +97,7 @@ function demographicsChecker() {
 	if (username.length > 0 && userage > 14 && userage < 81 &&
 		usergender.length > 3 && usereducation.length > 3) {
 		
-		dataList.push(userage);
+		dataList.push(parseInt(userage));
 		dataList.push(usergender);
 		dataList.push(usereducation);
 		
@@ -105,9 +106,9 @@ function demographicsChecker() {
 		pageTurner();
 		instructionsTimer();
 		
-		/* Preparing page 5 for first trial */
+		/* Preparing Page 6 for first trial */
 		portfolioRandomisation();
-		page5reset();
+		page6reset();
 		
 		
 	}
@@ -123,6 +124,7 @@ function nameUpdater() {
 /* Page 4 */
 function instructionsTurner() {
 	if (instructionsDisplay === 1) {
+		$("#description0").hide();
 		$(".description1").show();
 	} else if (instructionsDisplay === 2) {
 		$(".description2").show();
@@ -130,21 +132,22 @@ function instructionsTurner() {
 		$(".description3").show();
 	} else if (instructionsDisplay === 4) {
 		$(".description4").show();
+	} else if (instructionsDisplay === 5) {
+		$(".description5").show();
 	} else {
 		instructionsChecker();
 	}
 	
 	instructionsDisplay += 1;
-	
 }
 
 /* Confirming whether sufficient time has been spent on reading instructions */
 function instructionsChecker() {
 	if (instructionCheck) {
 		pageTurner();
-		$("#nextButton1").hide();
+		
 		$("#nextButton1").html("Next");
-		$("#infoNext").show();
+		
 	} else {
 		$("#instructionError").show();
 		instructionCheck = true;
@@ -161,8 +164,63 @@ function instructionOk() {
 	instructionCheck = true;
 }
 
-
 /* Page 5 */
+/* Collecting responses from quiz */
+function quizCollector() {
+	if ($('input[name="q1"]:checked').length > 0) {
+		question1 = document.querySelector('input[name="q1"]:checked').value;
+	}
+	
+	if ($('input[name="q2"]:checked').length > 0) {
+		question2 = document.querySelector('input[name="q2"]:checked').value;
+	}
+	
+	var checks = document.getElementsByClassName("q3");
+	question3 = "";
+	for (i=0; i < 4; i++) {
+		if (checks[i].checked === true) {
+			question3 += checks[i].value + " ";
+		}
+	}
+	
+	if (question1.length > 2 && question2.length > 2 && question3.length > 2) {
+		pageTurner();
+		quizPusher();
+		$("#infoNext").show();
+		$("#nextButton1").hide();
+	} else {
+		$("#quizError").show();
+	}
+}
+
+// Wooops! Possible to proceed without answering all questions!!!!
+function quizPusher() {
+	if (question1 === "$10,000,000") {
+		var q1 = "correct";
+	} else {
+		var q1 = "incorrect";
+	}
+	
+	if (question2 === "$100,000") {
+		var q2 = "correct";
+	} else {
+		var q2 = "incorrect";
+	}
+	
+	if (question3 === "clothing markets ") {
+		var q3 = "correct";
+	} else {
+		var q3 = "incorrect";
+	}
+	
+	dataList.push(q1);
+	dataList.push(q2);
+	dataList.push(q3);
+	
+}
+
+
+/* Page 6 */
 /* Randomising investment alternatives and calling choice maker function */
 function portfolioRandomisation() {
 	
@@ -424,8 +482,8 @@ function choiceDisplay() {
 }
 
 
-/* Page 5 preperation */
-function page5reset() {
+/* Page 6 preperation */
+function page6reset() {
 	$(".outcome").hide();
 	$(".result").hide();
 	$(".bonus").hide();
@@ -437,39 +495,39 @@ function page5reset() {
 	bonusUpdater();
 	displayUpdater();
 	
-	page5counter = 1;
+	page6counter = 1;
 }
 
 
 /* Displaying information on click of 'Next' button */
 function nextInfo() {
 	if (trialCounter <= 2) {
-		currentPage = 5;
-	} else {
 		currentPage = 6;
+	} else {
+		currentPage = 7;
 	}
 	
-	if (page5counter === 1) {
+	if (page6counter === 1) {
 		choiceDisplay();
-		$("#instructionsPage5").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background. Click 'Next' to reveal the outcomes.");
-	} else if (page5counter === 2) {
+		$("#instructionsPage6").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background. Click 'Next' to reveal the outcomes.");
+	} else if (page6counter === 2) {
 		$(".outcome").show();
 		$(".result").show();
-		$("#instructionsPage5").html("The results are out! <br> Click 'Next' to proceed.");
-	} else if (page5counter === 3) {
+		$("#instructionsPage6").html("The results are out! <br> Click 'Next' to proceed.");
+	} else if (page6counter === 3) {
 		$(".bonus"). show();
-		$("#instructionsPage5").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next pay check.");
+		$("#instructionsPage6").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next pay check.");
 		$("#infoNext").html("Submit");
 		if (helpTextShown === false){
 			helpTextTime();
 		}
 	} else {
 		$("#requestButton").show();
-		$("#subPage62").hide();
+		$("#subPage72").hide();
 		$("#month").html(monthList[trialCounter - 1]);
 		bonusCollector();
 	}
-	page5counter += 1;
+	page6counter += 1;
 }
 
 
@@ -497,7 +555,7 @@ function bonusCollector() {
 	
 	if (remainingBonus < 90 && remainingBonus >= 0) {
 		dataCollector();
-		nextPage()
+		nextPage();
 		$("#helpText").hide();
 		$("#infoNext").hide();
 		trialCounter += 1;
@@ -559,27 +617,27 @@ function dataCollector() {
 /* Resets and prepares for new trial */
 function trialReset() {
 	portfolioRandomisation();
-	page5reset();
-	$("#page6").hide();
-	$("#subPage62").hide();
-	$("#subPage61").show();
+	page6reset();
+	$("#page7").hide();
+	$("#subPage72").hide();
+	$("#subPage71").show();
 	width = 0;
-	$("#page5").show();
+	$("#page6").show();
 	$("#infoNext").html("Next");
 	$("#infoNext").show();
 	$(".alternative").css( {
 		"backgroundColor": "#4cfff6",
 		"fontWeight": "normal"
 	});
-	$("#instructionsPage5").html("Again, carefully consider the options available to each banker.<br>Click 'Next' to reveal their choices.");
+	$("#instructionsPage6").html("Again, carefully consider the options available to each banker.<br>Click 'Next' to reveal their choices.");
 }
 
 
-/* Page 6 */
+/* Page 7 */
 /* Requesting new month */
 function requestData() {
-	$("#subPage61").hide();
-	$("#subPage62").show();
+	$("#subPage71").hide();
+	$("#subPage72").show();
 	move();
 }
 
@@ -601,7 +659,7 @@ function move() {
 }
 
 
-/* Page 7 */
+/* Page 8 */
 /* Collects promotion data and displays final page */
 function promoFunc(event) {
 	promoted = personalityList[(event.data.param)];
@@ -611,7 +669,7 @@ function promoFunc(event) {
 	$("#nextButton1").html("Submit");
 }
 
-/* Page 8*/
+/* Page 9*/
 /* Collects survey data */
 function surveyCollector() {
 	competenceQ = document.querySelector('input[name="competence"]:checked').value;
@@ -733,19 +791,24 @@ var dataList = [];
 var consentForm = 0;
 
 /* Page 3 variables */
-var usereducation;
-var usergender;
 var username;
 var userage;
+var usergender;
+var usereducation;
 
 
 /* Page 4 variables */
 var instructionsDisplay = 1;
 var instructionCheck = false;
 
-
 /* Page 5 variables */
-var page5counter = 1;
+var question1 = "";
+var question2 = "";
+var question3 = "";
+
+
+/* Page 6 variables */
+var page6counter = 1;
 
 var remainingBonus = 100;
 
@@ -758,7 +821,7 @@ var monthList = ["January", "February", "March", "April", "May", "June", "July",
 var doubleCheck = false;
 var helpTextShown = false;
 
-/* Page 8 */
+/* Page 9 */
 var competence = -1;
 var decisionQuality = -1;
 var outcomeQuality = -1;

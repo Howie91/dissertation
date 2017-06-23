@@ -92,6 +92,9 @@ h2 {
 .description4 {
 	display: none;
 }
+.description5 {
+	display: none;
+}
 
 #page5 {
 	display: none;
@@ -113,6 +116,10 @@ h2 {
 }
 
 #page9 {
+	display: none;
+}
+
+#page10 {
 	display: none;
 }
 
@@ -193,8 +200,6 @@ h2 {
 
 
 
-
-
 /* Page 1 */
 #consentError {
 	margin: 0%;
@@ -221,6 +226,19 @@ legend {
 
 
 /* Page 5 */
+.quizQ {
+	width: 100%;
+	font-size: 1em;
+	text-align: center;
+	margin-top: 1%;
+}
+
+#quizError {
+	margin-top: 1%;
+}
+
+
+/* Page 6 */
 .divTable{
 	display: table;
 	width: 94%;
@@ -396,7 +414,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 
-/* Page 6*/
+/* Page 7*/
 
 #requestButton {
 	display: block;
@@ -407,7 +425,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 
-#subPage62 {
+#subPage72 {
 	display: none;
 	height: 50%;
 }
@@ -426,7 +444,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 
-/* Page 8 */
+/* Page 9 */
 
 #page8 {
 	width: 65%;
@@ -504,7 +522,7 @@ form .likert li label {
 }
 
 
-/* Page 9 */
+/* Page 10 */
 #approvalCode {
 	font-size: 1.2em;
 	font-weight: bold;
