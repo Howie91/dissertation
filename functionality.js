@@ -193,7 +193,7 @@ function quizCollector() {
 	}
 }
 
-// Wooops! Possible to proceed without answering all questions!!!!
+
 function quizPusher() {
 	if (question1 === "$10,000,000") {
 		var q1 = "correct";
@@ -239,32 +239,22 @@ function portfolioRandomisation() {
 	
 	for (i = 0; i < personalityList.length; i++) {
 		
-		/* Determining whether portfolio has high (extreme) or low risk */
+		/* Determining whether portfolio has high (extreme) or normal risk */
 		var extreme = false;
 		var extremeDeterminator = (Math.floor(Math.random() * 100));
 		
-		if (personalityList[i] === "competent") {
-			if (extremeDeterminator < 20) {
-				extreme = true;
-			}
-		} else if (personalityList[i] === "average") {
-			if (extremeDeterminator < 30) {
-				extreme = true;
-			}
-		} else {
-			if (extremeDeterminator < 40) {
-				extreme = true;
-			}
+		if (extremeDeterminator < 20) {
+			extreme = true;
 		}
 	
 		if (extreme) {
-			firstProb = (Math.floor(Math.random() * 3) + 1) * 10;
-			firstOutcome = (Math.floor(Math.random() * 7) + 13);
-			secondOutcome = (Math.floor(Math.random() * 4) + 3);
+			firstProb = (Math.floor(Math.random() * 3) + 2) * 10;	// 20 - 40%
+			firstOutcome = (Math.floor(Math.random() * 6) + 12); 	// 12 - 17 MNOK
+			secondOutcome = (Math.floor(Math.random() * 5) + 3); 	// 3 - 7 MNOK
 		} else {
-			firstProb = (Math.floor(Math.random() * 4) + 3) * 10;
-			firstOutcome = (Math.floor(Math.random() * 3) + 11);
-			secondOutcome = (Math.floor(Math.random() * 3) + 7);
+			firstProb = (Math.floor(Math.random() * 4) + 4) * 10;	// 40 - 70%
+			firstOutcome = (Math.floor(Math.random() * 3) + 11); 	// 11 - 13 MNOK
+			secondOutcome = (Math.floor(Math.random() * 3) + 7);	// 7 - 9 MNOK
 		}
 		
 		secondProb = 100 - firstProb;
@@ -291,11 +281,11 @@ function portfolioRandomisation() {
 		
 		/* Adding bad luck to competent banker, and good luck to incompetent */
 		if (personalityList[i] === "competent") {
-			firstProb -= 20;
-			secondProb += 20;
+			firstProb -= 25;
+			secondProb += 25;
 		} else if (personalityList[i] === "incompetent") {
-			firstProb += 20;
-			secondProb -= 20;
+			firstProb += 25;
+			secondProb -= 25;
 		}
 		
 		var probabilityVariableList = [firstProb, secondProb];
@@ -349,7 +339,7 @@ function choiceMaker(i, m) {
 	choiceProbability = (Math.floor(Math.random() * 100));
 	
 	if (personalityList[i] === "competent") {
-		if (choiceProbability < 90) {
+		if (choiceProbability < 90) {						// Correct decision 90% of the time
 			compPersonDecision = "correct";		
 		} else {
 			compPersonDecision = "incorrect";
@@ -357,7 +347,7 @@ function choiceMaker(i, m) {
 		choiceList.push(compPersonDecision);
 		
 	} else if (personalityList[i] === "average") {
-		if (choiceProbability < 50) {
+		if (choiceProbability < 50) {						// Correct decision 50% of the time
 			avgPersonDecision = "correct";		
 		} else {
 			avgPersonDecision = "incorrect";
@@ -365,7 +355,7 @@ function choiceMaker(i, m) {
 		choiceList.push(avgPersonDecision);
 		
 	} else if (personalityList[i] === "incompetent") {
-		if (choiceProbability < 30) {
+		if (choiceProbability < 30) {						// Correct decision 30% of the time
 			incompPersonDecision = "correct";		
 		} else {
 			incompPersonDecision = "incorrect";
@@ -375,21 +365,21 @@ function choiceMaker(i, m) {
 	
 	/* Displaying choice based on expected values and whether choice is correct or incorrect */
 	if (choiceList[i] === "correct") {
-		if (expectedValue > 10.1) { 				/*Stocks are chosen*/
+		if (expectedValue > 10.1) { 				//Stocks are chosen
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
 			resultList.push(parseFloat(stockOutcome.slice(1, stockOutcome.length - 1)));
-		} else {									/*Bonds are chosen*/
+		} else {									//Bonds are chosen
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
 			resultList.push(parseFloat(bondsOutcome.slice(1, bondsOutcome.length - 1)));
 		}
 	} else {
-		if (expectedValue <= 10.1) { 				/*Stocks are chosen*/
+		if (expectedValue <= 10.1) { 				//Stocks are chosen
 			decisionList.push("stocks");
 			$("#result" + m).html(stockOutcome);
 			resultList.push(parseFloat(stockOutcome.slice(1, stockOutcome.length - 1)));
-		} else {									/*Bonds are chosen*/
+		} else {									//Bonds are chosen
 			decisionList.push("bonds");
 			$("#result" + m).html(bondsOutcome);
 			resultList.push(parseFloat(bondsOutcome.slice(1, bondsOutcome.length - 1)));
@@ -450,8 +440,6 @@ function displayUpdater() {
 		}
 	}
 }
-
-
 
 
 /* Changing background colours of chosen alternatives */
