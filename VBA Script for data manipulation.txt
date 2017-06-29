@@ -1,0 +1,113 @@
+Sub InsertID()
+
+Dim i As Integer
+Dim participants As Integer
+
+' Inserting participant number based on number of rows
+participants = ActiveSheet.UsedRange.Rows.Count - 1
+
+Range("A1").EntireColumn.Insert
+Range("A1").Value = "ID"
+Range("A1").Select
+
+For i = 1 To participants
+    Selection.Offset(1, 0).Select
+    Selection.Value = i
+
+    Next i
+
+' Deleting unnecessary columns
+Range("B:E").Delete
+Range("OZ:PC").Delete
+
+
+' Reorganising data
+Dim j As Integer
+Dim m As Integer
+Dim ID As Integer
+Dim n As Integer
+Dim demo As Range
+Dim rng As Range
+
+
+For p = 1 To participants
+    ' Adding 11 rows below first trial
+    For j = (((p - 1) * 12) + 3) To ((p * 12) + 1)
+        Range("A" & j).EntireRow.Insert
+        Next j
+
+    ' Copying IDs to all new rows
+    ID = Range("A" & (((p - 1) * 12) + 2)).Value
+    Range("A" & (((p - 1) * 12) + 2)).Select
+
+    For m = 2 To 12
+        Selection.Offset(1, 0).Select
+        Selection.Value = ID
+
+        Next m
+    
+    ' Copying demographicss to all new rows
+    For n = 2 To 12
+        Set demo = Range("B" & (((p - 1) * 12) + n) & ":G" & (((p - 1) * 12) + n))
+        demo.Copy Destination:=demo.Offset(1, 0)
+
+        Next n
+    
+
+
+    ' Moving trial data to separate lines
+    For j = (((p - 1) * 12) + 2) To ((p * 12))
+        Set rng = Range("AP" & j & ":" & "OY" & j)
+        rng.Cut Destination:=rng.Offset(1, -34)
+
+        Next j
+    
+    Next p
+    
+' Deleting unnecessary headings
+Range("AP1:OY1").Delete
+
+
+
+End Sub
+
+
+Sub dividingTrials()
+
+Dim t As Integer
+Dim j As Integer
+Dim n As Integer
+Dim demo As Range
+Dim m As Integer
+Dim rng As Range
+Dim trials As Integer
+
+trials = ActiveSheet.UsedRange.Rows.Count - 1
+
+For t = 1 To trials
+
+    ' Adding 2 rows below competent banker for each trial
+    For j = (t * 3) To (t * 3) + 1
+        Range("A" & j).EntireRow.Insert
+        Next j
+
+    ' Copying demographicss to all new rows
+    For n = (t * 3) - 1 To (t * 3)
+        Set demo = Range("A" & n & ":H" & n)
+        demo.Copy Destination:=demo.Offset(1, 0)
+
+        Next n
+
+    ' Moving trial data to separate lines
+    For m = (t * 3) - 1 To (t * 3)
+        Set rng = Range("T" & m & ":" & "AO" & m)
+        rng.Cut Destination:=rng.Offset(1, -11)
+
+        Next m
+
+Next t
+
+
+
+End Sub
+
