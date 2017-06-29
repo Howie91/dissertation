@@ -489,7 +489,7 @@ function page6reset() {
 
 /* Displaying information on click of 'Next' button */
 function nextInfo() {
-	if (trialCounter <= 2) {
+	if (trialCounter <= 11) {
 		currentPage = 6;
 	} else {
 		currentPage = 7;
@@ -504,7 +504,7 @@ function nextInfo() {
 		$("#instructionsPage6").html("The results are out! <br> Click 'Next' to proceed.");
 	} else if (page6counter === 3) {
 		$(".bonus"). show();
-		$("#instructionsPage6").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next pay check.");
+		$("#instructionsPage6").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next paycheck.");
 		$("#infoNext").html("Submit");
 		if (helpTextShown === false){
 			helpTextTime();
@@ -720,10 +720,12 @@ function surveyCollector() {
 	
 	
 	/* Generating, storing and displaying HIT Approval Code */
+	codeList = [];
 	var approvalCode = Math.random().toString(36).slice(-8);
-	firebase.database().ref('Approval Codes').push(approvalCode);
+	codeList.push(approvalCode);
+	codeList.push(currentTime);
+	firebase.database().ref('Approval Codes').push(codeList);
 	$("#approvalCode").html(approvalCode);
-	
 	
 	$("#nextButton1").hide();
 	pageTurner();
@@ -816,9 +818,15 @@ var outcomeQuality = -1;
 
 
 
-
-
 /* Generic code running when page has loaded */
+
+// OBS!
+// Comment out this when full experiment is running
+/*
+$(document).ready(function() {
+	alert("Please note: This is a short version of the experiment with only 3 trials.");
+});
+*/
 
 var today = new Date();
 var dd = today.getDate();
