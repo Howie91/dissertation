@@ -473,11 +473,13 @@ function page6reset() {
 
 /* Animating in help text */
 function nextInfoTime() {
-	if (trialCounter === 1) {
-		nextTime = window.setTimeout(nextInfo, 20000);				// Set timing for animation here
+	if (trialCounter === 1 && page6counter === 1) {
+		nextTime = window.setTimeout(nextInfo, 35000);				// Set timing for animation here
+	} else if (trialCounter === 1 && page6counter > 1) {
+		nextTime = window.setTimeout(nextInfo, 25000);				// Suggested: 35000, 25000 and 20000 other trails
 	} else {
-		nextTime = window.setTimeout(nextInfo, 12000);				// Suggestied: 20000 first trial, 13000 other trails
-	}
+		nextTime = window.setTimeout(nextInfo, 20000);
+	} 
 }
 
 
@@ -511,11 +513,12 @@ function nextInfo() {
 		bonusCollector();
 	}
 	
-	if (page6counter < 3) {
+	page6counter += 1;
+	
+	if (page6counter < 4) {
 		nextInfoTime();
 	}
 	
-	page6counter += 1;
 }
 
 
