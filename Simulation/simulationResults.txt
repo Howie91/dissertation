@@ -1,0 +1,3 @@
+Number of executions: 10000Competent person chose correct 89.01% of the time, which equals stocks 57.67%.Competent person had an average result of $9.87m
+Average person chose correct 49.68% of the time, which equals stocks 49.54%.Average person had an average result of $10.37m
+Incompetent person chose correct 29.84% of the time, which equals stocks 46.26%.Incompetent person had an average result of $10.8m

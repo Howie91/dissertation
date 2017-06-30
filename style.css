@@ -34,7 +34,7 @@ h2 {
 
 .image {
 	max-width: 230px;
-	width: 30%;
+	width: 23%;
 	display: inline-block;
 }
 
@@ -44,7 +44,7 @@ h2 {
 }
 
 .experimentImages {
-	width: 70%;
+	width: 75%;
 	margin: auto;
 }
 
@@ -109,7 +109,6 @@ h2 {
 #page7 {
 	display: none;
 }
-
 
 #page8 {
 	display: none;
@@ -239,6 +238,10 @@ legend {
 
 
 /* Page 6 */
+#instructionsPage6 {
+	height: 100px;
+}
+
 .divTable{
 	display: table;
 	width: 94%;

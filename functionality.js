@@ -184,9 +184,11 @@ function quizCollector() {
 	}
 	
 	if (question1.length > 2 && question2.length > 2 && question3.length > 2) {
+		alert("The next section appears in timed sequences and requires your full attention. Please click 'OK' when you are ready to proceed.");
 		pageTurner();
 		quizPusher();
-		$("#infoNext").show();
+		nextInfoTime();
+		// $("#infoNext").show();
 		$("#nextButton1").hide();
 	} else {
 		$("#quizError").show();
@@ -239,23 +241,12 @@ function portfolioRandomisation() {
 	
 	for (i = 0; i < personalityList.length; i++) {
 		
-		/* Determining whether portfolio has high (extreme) or normal risk */
-		var extreme = false;
-		var extremeDeterminator = (Math.floor(Math.random() * 100));
+		/* Determining the prospectus for the stock portfolio */
 		
-		if (extremeDeterminator < 20) {
-			extreme = true;
-		}
-	
-		if (extreme) {
-			firstProb = (Math.floor(Math.random() * 3) + 2) * 10;	// 20 - 40%
-			firstOutcome = (Math.floor(Math.random() * 6) + 12); 	// 12 - 17 MNOK
-			secondOutcome = (Math.floor(Math.random() * 5) + 3); 	// 3 - 7 MNOK
-		} else {
-			firstProb = (Math.floor(Math.random() * 4) + 4) * 10;	// 40 - 70%
-			firstOutcome = (Math.floor(Math.random() * 3) + 11); 	// 11 - 13 MNOK
-			secondOutcome = (Math.floor(Math.random() * 3) + 7);	// 7 - 9 MNOK
-		}
+		firstProb = (Math.floor(Math.random() * 4) + 4) * 10;	// 40 - 70%
+		firstOutcome = (Math.floor(Math.random() * 6) + 11); 	// 11 - 16 MNOK
+		secondOutcome = (Math.floor(Math.random() * 5) + 5);	// 5 - 9 MNOK
+
 		
 		secondProb = 100 - firstProb;
 		
@@ -279,11 +270,11 @@ function portfolioRandomisation() {
 		roundedExpectedValue = Math.round( expectedValue * 10 ) / 10
 		expectedValueList.push(roundedExpectedValue);
 		
-		/* Adding bad luck to competent banker, and good luck to incompetent */
-		if (personalityList[i] === "competent") {
+		/* Adding bad luck to unlucky bankers, and good luck to lucky bankers */
+		if (personalityList[i] === "compUnlucky" || personalityList[i] === "incompUnlucky") {
 			firstProb -= 25;
 			secondProb += 25;
-		} else if (personalityList[i] === "incompetent") {
+		} else {
 			firstProb += 25;
 			secondProb -= 25;
 		}
@@ -338,29 +329,21 @@ function choiceMaker(i, m) {
 	/* Determining whether banker makes a correct or incorrect decision */
 	choiceProbability = (Math.floor(Math.random() * 100));
 	
-	if (personalityList[i] === "competent") {
+	if (personalityList[i] === "compLucky" || personalityList[i] === "compUnlucky") {
 		if (choiceProbability < 90) {						// Correct decision 90% of the time
-			compPersonDecision = "correct";		
+			decision = "correct";		
 		} else {
-			compPersonDecision = "incorrect";
+			decision = "incorrect";
 		}
-		choiceList.push(compPersonDecision);
+		choiceList.push(decision);
 		
-	} else if (personalityList[i] === "average") {
-		if (choiceProbability < 50) {						// Correct decision 50% of the time
-			avgPersonDecision = "correct";		
-		} else {
-			avgPersonDecision = "incorrect";
-		}
-		choiceList.push(avgPersonDecision);
-		
-	} else if (personalityList[i] === "incompetent") {
+	} else if (personalityList[i] === "incompLucky" || personalityList[i] === "incompUnlucky") {
 		if (choiceProbability < 30) {						// Correct decision 30% of the time
-			incompPersonDecision = "correct";		
+			decision = "correct";		
 		} else {
-			incompPersonDecision = "incorrect";
+			decision = "incorrect";
 		}
-		choiceList.push(incompPersonDecision);
+		choiceList.push(decision);
 	}
 	
 	/* Displaying choice based on expected values and whether choice is correct or incorrect */
@@ -393,7 +376,7 @@ function choiceMaker(i, m) {
 /* Calculating remaining bonus, and calling for display update */
 function bonusUpdater() {
 	
-	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val();
+	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val() - $("#bonus4").val();
 	
 	if (remainingBonus === 0) {
 		$("#bonusRemaining").html("Remaining: $0");
@@ -432,7 +415,7 @@ function bonusUpdater() {
 
 /* Updates numbers displayed to user */
 function displayUpdater() {
-	for (var i = 1; i < 3 + 1; i++) {
+	for (var i = 1; i < 4 + 1; i++) {
 		if ($("#bonus" + i).val() > 0) {
 			$("#bonusDisplay" + i).html("$" + $("#bonus" + i).val() + ",000");
 		} else {
@@ -444,7 +427,7 @@ function displayUpdater() {
 
 /* Changing background colours of chosen alternatives */
 function choiceDisplay() {
-	for (var i = 0; i < 3; i++) {
+	for (var i = 0; i < 4; i++) {
 		var n = i + 1;
 		if (decisionList[i] === "stocks") {
 			$("#stock" + n).css( {
@@ -480,10 +463,21 @@ function page6reset() {
 	$("#bonus1").val(0);
 	$("#bonus2").val(0);
 	$("#bonus3").val(0);
+	$("#bonus4").val(0);
 	bonusUpdater();
 	displayUpdater();
 	
 	page6counter = 1;
+}
+
+
+/* Animating in help text */
+function nextInfoTime() {
+	if (trialCounter === 1) {
+		nextTime = window.setTimeout(nextInfo, 20000);				// Set timing for animation here
+	} else {
+		nextTime = window.setTimeout(nextInfo, 12000);				// Suggestied: 20000 first trial, 13000 other trails
+	}
 }
 
 
@@ -497,15 +491,16 @@ function nextInfo() {
 	
 	if (page6counter === 1) {
 		choiceDisplay();
-		$("#instructionsPage6").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background. Click 'Next' to reveal the outcomes.");
+		$("#instructionsPage6").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background.");
 	} else if (page6counter === 2) {
 		$(".outcome").show();
 		$(".result").show();
-		$("#instructionsPage6").html("The results are out! <br> Click 'Next' to proceed.");
+		$("#instructionsPage6").html("The results are out!<br>");
 	} else if (page6counter === 3) {
-		$(".bonus"). show();
+		$(".bonus").show();
 		$("#instructionsPage6").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next paycheck.");
 		$("#infoNext").html("Submit");
+		$("#infoNext").show();
 		if (helpTextShown === false){
 			helpTextTime();
 		}
@@ -515,13 +510,18 @@ function nextInfo() {
 		$("#month").html(monthList[trialCounter - 1]);
 		bonusCollector();
 	}
+	
+	if (page6counter < 3) {
+		nextInfoTime();
+	}
+	
 	page6counter += 1;
 }
 
 
 /* Animating in help text */
 function helpTextTime() {
-	timeoutID = window.setTimeout(helpTextShow, 700);
+	timeoutID = window.setTimeout(helpTextShow, 7000);
 }
 
 function helpTextShow() {
@@ -558,47 +558,59 @@ function bonusCollector() {
 function dataCollector() {
 	var bonusList = [];
 	
-	for (var x = 1; x < 4; x++) {
+	for (var x = 1; x < 5; x++) {
 		bonusList.push(parseFloat($("#bonus" + x).val()));
 	};
 	
 	dataList.push(trialCounter);
 	
-	dataList.push(firstProbList[indexComp]);
-	dataList.push(firstOutcomeList[indexComp]);
-	dataList.push(secondProbList[indexComp]);
-	dataList.push(secondOutcomeList[indexComp]);
-	dataList.push(expectedValueList[indexComp]);
-	dataList.push(stockOutcomeList[indexComp]);
-	dataList.push(bondOutcomeList[indexComp]);
-	dataList.push(decisionList[indexComp]);
-	dataList.push(choiceList[indexComp]);
-	dataList.push(resultList[indexComp]);
-	dataList.push(bonusList[indexComp]);
+	dataList.push(firstProbList[indexCompLucky]);
+	dataList.push(firstOutcomeList[indexCompLucky]);
+	dataList.push(secondProbList[indexCompLucky]);
+	dataList.push(secondOutcomeList[indexCompLucky]);
+	dataList.push(expectedValueList[indexCompLucky]);
+	dataList.push(stockOutcomeList[indexCompLucky]);
+	dataList.push(bondOutcomeList[indexCompLucky]);
+	dataList.push(decisionList[indexCompLucky]);
+	dataList.push(choiceList[indexCompLucky]);
+	dataList.push(resultList[indexCompLucky]);
+	dataList.push(bonusList[indexCompLucky]);
 	
-	dataList.push(firstProbList[indexAvg]);
-	dataList.push(firstOutcomeList[indexAvg]);
-	dataList.push(secondProbList[indexAvg]);
-	dataList.push(secondOutcomeList[indexAvg]);
-	dataList.push(expectedValueList[indexAvg]);
-	dataList.push(stockOutcomeList[indexAvg]);
-	dataList.push(bondOutcomeList[indexAvg]);
-	dataList.push(decisionList[indexAvg]);
-	dataList.push(choiceList[indexAvg]);
-	dataList.push(resultList[indexAvg]);
-	dataList.push(bonusList[indexAvg]);
+	dataList.push(firstProbList[indexCompUnlucky]);
+	dataList.push(firstOutcomeList[indexCompUnlucky]);
+	dataList.push(secondProbList[indexCompUnlucky]);
+	dataList.push(secondOutcomeList[indexCompUnlucky]);
+	dataList.push(expectedValueList[indexCompUnlucky]);
+	dataList.push(stockOutcomeList[indexCompUnlucky]);
+	dataList.push(bondOutcomeList[indexCompUnlucky]);
+	dataList.push(decisionList[indexCompUnlucky]);
+	dataList.push(choiceList[indexCompUnlucky]);
+	dataList.push(resultList[indexCompUnlucky]);
+	dataList.push(bonusList[indexCompUnlucky]);
 	
-	dataList.push(firstProbList[indexIncomp]);
-	dataList.push(firstOutcomeList[indexIncomp]);
-	dataList.push(secondProbList[indexIncomp]);
-	dataList.push(secondOutcomeList[indexIncomp]);
-	dataList.push(expectedValueList[indexIncomp]);
-	dataList.push(stockOutcomeList[indexIncomp]);
-	dataList.push(bondOutcomeList[indexIncomp]);
-	dataList.push(decisionList[indexIncomp]);
-	dataList.push(choiceList[indexIncomp]);
-	dataList.push(resultList[indexIncomp]);
-	dataList.push(bonusList[indexIncomp]);
+	dataList.push(firstProbList[indexIncompLucky]);
+	dataList.push(firstOutcomeList[indexIncompLucky]);
+	dataList.push(secondProbList[indexIncompLucky]);
+	dataList.push(secondOutcomeList[indexIncompLucky]);
+	dataList.push(expectedValueList[indexIncompLucky]);
+	dataList.push(stockOutcomeList[indexIncompLucky]);
+	dataList.push(bondOutcomeList[indexIncompLucky]);
+	dataList.push(decisionList[indexIncompLucky]);
+	dataList.push(choiceList[indexIncompLucky]);
+	dataList.push(resultList[indexIncompLucky]);
+	dataList.push(bonusList[indexIncompLucky]);
+	
+	dataList.push(firstProbList[indexIncompUnlucky]);
+	dataList.push(firstOutcomeList[indexIncompUnlucky]);
+	dataList.push(secondProbList[indexIncompUnlucky]);
+	dataList.push(secondOutcomeList[indexIncompUnlucky]);
+	dataList.push(expectedValueList[indexIncompUnlucky]);
+	dataList.push(stockOutcomeList[indexIncompUnlucky]);
+	dataList.push(bondOutcomeList[indexIncompUnlucky]);
+	dataList.push(decisionList[indexIncompUnlucky]);
+	dataList.push(choiceList[indexIncompUnlucky]);
+	dataList.push(resultList[indexIncompUnlucky]);
+	dataList.push(bonusList[indexIncompUnlucky]);
 };
 
 
@@ -612,12 +624,13 @@ function trialReset() {
 	width = 0;
 	$("#page6").show();
 	$("#infoNext").html("Next");
-	$("#infoNext").show();
+	// $("#infoNext").show();
 	$(".alternative").css( {
 		"backgroundColor": "#4cfff6",
 		"fontWeight": "normal"
 	});
-	$("#instructionsPage6").html("Again, carefully consider the options available to each banker.<br>Click 'Next' to reveal their choices.");
+	$("#instructionsPage6").html("Again, carefully consider the options available to each banker.");
+	nextInfoTime();
 }
 
 
@@ -634,7 +647,7 @@ function requestData() {
 function move() {
   var elem = document.getElementById("progressBar");   
   var width = 0;
-  var id = setInterval(frame, 12);
+  var id = setInterval(frame, 13);						// Set progressbar speed here. Suggested: 13
   function frame() {
     if (width >= 100) {
       clearInterval(id);
@@ -716,7 +729,7 @@ function surveyCollector() {
 	endTime = endHours + ":" + endMinutes + ":" + endSeconds;
 	dataList.splice(2, 0, endTime, timeSpent);
 	
-	ref.push(dataList);
+	firebase.database().ref('Experimental Data').push(dataList);
 	
 	
 	/* Generating, storing and displaying HIT Approval Code */
@@ -744,7 +757,8 @@ $(document).ready(function(){
 		
 	$("#promotion1").click({param: "0"}, promoFunc);
 	$("#promotion2").click({param: "1"}, promoFunc);
-	$("#promotion3").click({param: "2"}, promoFunc);	
+	$("#promotion3").click({param: "2"}, promoFunc);
+	$("#promotion4").click({param: "3"}, promoFunc);	
 });
 
 
@@ -764,6 +778,11 @@ $(document).ready(function() {
 		bonusBanker3 = $("#bonus3").val();
 		bonusUpdater();
 	});
+	
+	$('#bonus4').on('input', function() {
+		bonusBanker4 = $("#bonus4").val();
+		bonusUpdater();
+	});
 });
 
 
@@ -772,7 +791,7 @@ $(document).ready(function() {
 var currentPage = 1;
 var trialCounter = 1;
 
-var personalityList = ["competent", "average", "incompetent"];
+var personalityList = ["compLucky", "compUnlucky", "incompLucky", "incompUnlucky"];
 
 
 var dataList = [];
@@ -805,6 +824,7 @@ var remainingBonus = 100;
 var bonusBanker1 = 0;
 var bonusBanker2 = 0;
 var bonusBanker3 = 0;
+var bonusBanker4 = 4;
 
 var monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -820,13 +840,6 @@ var outcomeQuality = -1;
 
 /* Generic code running when page has loaded */
 
-// OBS!
-// Comment out this when full experiment is running
-/*
-$(document).ready(function() {
-	alert("Please note: This is a short version of the experiment with only 3 trials.");
-});
-*/
 
 var today = new Date();
 var dd = today.getDate();
@@ -872,7 +885,7 @@ var nameList = ["Harry", "Matt", "Oliver", "Jack", "Charlie", "Thomas", "Jacob",
 
 $(document).ready(function() {
 
-	for (var i = 1; i < 4; i++) {
+	for (var i = 1; i < 5; i++) {
 		var bankerName = nameList[Math.floor(Math.random() * nameList.length)];
 	
 		for (var j = nameList.length - 1; j >= 0; j--) {
@@ -893,7 +906,7 @@ var imageList = ["person1", "person2", "person3", "person4", "person5", "person6
 
 $(document).ready(function() {
 	
-	for (var i = 1; i < 4; i++) {
+	for (var i = 1; i < 5; i++) {
 		var chosenImage = imageList[Math.floor(Math.random() * imageList.length)];
 
 		for (var j = imageList.length - 1; j >= 0; j--) {
@@ -912,10 +925,10 @@ $(document).ready(function() {
 $(document).ready(function() {
 	shuffle(personalityList);
 	
-	indexComp = personalityList.indexOf("competent");
-	indexAvg = personalityList.indexOf("average");
-	indexIncomp = personalityList.indexOf("incompetent");
-	
+	indexCompLucky = personalityList.indexOf("compLucky");
+	indexCompUnlucky = personalityList.indexOf("compUnlucky");
+	indexIncompLucky = personalityList.indexOf("incompLucky");
+	indexIncompUnlucky = personalityList.indexOf("incompUnlucky");
 });
 
 
@@ -938,8 +951,5 @@ $(document).ready(function() {
 	messagingSenderId: "146625832163"
 	};
 	firebase.initializeApp(config);	
-	
-	database = firebase.database();
-	ref = database.ref('Experimental Data');	
 });
 

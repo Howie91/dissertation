@@ -6,22 +6,23 @@ from random import *
 def informationRandomiser():
     for i in range(0, 3):
 
-        # Determining whether stock portfolio is high (extreme) or low in risk and return
-        extreme = False
-        extremeDeterminator = randint(0, 100)
+        # # Determining whether stock portfolio is high (extreme) or low in risk and return
+        # extreme = False
+        # extremeDeterminator = randint(0, 100)
+        #
+        # if extremeDeterminator < 20:                    # probability of
+        #     extreme = True                              # extreme condition 20% of the time
+        #
+        # # Determining probabilities and potential outcomes of stock portfolio
+        # if extreme:
+        #     firstProb = randint(2, 4) * 10       # 20 - 40%
+        #     firstOutcome = randint(12, 17)       # 12 - 17 MNOK
+        #     secondOutcome = randint(3, 7)        # 3 - 7 MNOK
+        # else:
 
-        if extremeDeterminator < 20:                    # probability of
-            extreme = True                              # extreme condition 20% of the time
-
-        # Determining probabilities and potential outcomes of stock portfolio
-        if extreme:
-            firstProb = randint(2, 4) * 10       # 20 - 40%
-            firstOutcome = randint(12, 17)       # 12 - 17 MNOK
-            secondOutcome = randint(3, 7)        # 3 - 7 MNOK
-        else:
-            firstProb = randint(4, 7) * 10       # 40 - 70%
-            firstOutcome = randint(11, 13)       # 11 - 13 MNOK
-            secondOutcome = randint(7, 9)        # 7 - 9 MNOK
+        firstProb = randint(4, 7) * 10       # 40 - 70%
+        firstOutcome = randint(11, 16)       # 11 - 16 MNOK
+        secondOutcome = randint(5, 9)        # 5 - 9 MNOK
 
         secondProb = 100 - firstProb
 
@@ -147,7 +148,7 @@ personality = [resultListComp, resultListAvg, resultListIncomp]
 investment = [investmentListComp, investmentListAvg, investmentListIncomp]
 
 # Running program
-runs = 100000
+runs = 10000
 printableList = []
 
 for i in range(0,runs):
@@ -185,7 +186,7 @@ printableList.append(line5)
 printableList.append(line6)
 
 file = open("simulationResults.txt", "w")
-file.write("Number of executions: " + runs)
+file.write("Number of executions: " + str(runs))
 for i in range(0,6):
     file.write(printableList[i])
     print(printableList[i])
