@@ -4,9 +4,16 @@
 function nextPage() {
 	if (currentPage === 1) {
 		consentDisplay();
-	} else if (currentPage === 2) {
-		$("#nextButton1").html("Send");
-		pageTurner();
+	} else if (currentPage === 2) {	
+		if (firstAttempt === false) {
+			pageTurner();
+			pageTurner();
+			instructionsTimer();
+			return;
+		} else {
+			$("#nextButton1").html("Send");
+			pageTurner();
+		}
 	} else if (currentPage === 3) {
 		demographicsChecker();
 	} else if (currentPage === 4) {
@@ -66,6 +73,7 @@ function consentChecker() {
 /* Page 3 */
 /* Checking and collecting demographics information */
 function demographicsChecker() {
+
 	username = document.getElementById("un").value;
 	if (username.length < 1) {
 		$("#nameError").show()
@@ -145,7 +153,6 @@ function instructionsTurner() {
 function instructionsChecker() {
 	if (instructionCheck) {
 		pageTurner();
-		
 		$("#nextButton1").html("Next");
 		
 	} else {
@@ -175,7 +182,7 @@ function quizCollector() {
 		question2 = document.querySelector('input[name="q2"]:checked').value;
 	}
 	
-	var checks = document.getElementsByClassName("q3");
+	var checks = document.getElementsByClassName("Q3");
 	question3 = "";
 	for (i=0; i < 4; i++) {
 		if (checks[i].checked === true) {
@@ -184,12 +191,9 @@ function quizCollector() {
 	}
 	
 	if (question1.length > 2 && question2.length > 2 && question3.length > 2) {
-		alert("The next section appears in timed sequences and requires your full attention. Please click 'OK' when you are ready to proceed.");
-		pageTurner();
 		quizPusher();
-		nextInfoTime();
 		// $("#infoNext").show();
-		$("#nextButton1").hide();
+		
 	} else {
 		$("#quizError").show();
 	}
@@ -198,27 +202,75 @@ function quizCollector() {
 
 function quizPusher() {
 	if (question1 === "$10,000,000") {
-		var q1 = "correct";
+		q1 = "correct";
 	} else {
-		var q1 = "incorrect";
+		q1 = "incorrect";
+		incorrectQ += 1;
 	}
 	
 	if (question2 === "$100,000") {
-		var q2 = "correct";
+		q2 = "correct";
 	} else {
-		var q2 = "incorrect";
+		q2 = "incorrect";
+		incorrectQ += 1;
 	}
 	
 	if (question3 === "clothing markets ") {
-		var q3 = "correct";
+		q3 = "correct";
 	} else {
-		var q3 = "incorrect";
+		q3 = "incorrect";
+		incorrectQ += 1;
 	}
+
+	if (firstAttempt === true) {
+		dataList.push(incorrectQ);
+		if (incorrectQ > 1) {
+			alert("Unfortunately you answered " + incorrectQ + " questions incorrectly. Please give it another go, we know you can get this right!");
+			theNewDeal();
+		} else if (incorrectQ === 1) {
+			alert("Unfortunately you answered " + incorrectQ + " question incorrectly. Please give it another go, we know you can get this right!");
+			theNewDeal();
+		} else {
+			finalQuiz();
+		}
+		
+	} else {
+		finalQuiz();
+	}
+}
+
+function theNewDeal() {
+	// Taking participant back to page 2
+	firstAttempt = false;
+	currentPage = 2;
+	$("#page5").hide();
+	$("#page2").show();
+	$("#nextButton1").show();
 	
-	dataList.push(q1);
-	dataList.push(q2);
-	dataList.push(q3);
+	// Resetting instructions-display
+	instructionsDisplay = 1;
+	instructionCheck = false;
+	$(".description2").hide();
+	$(".description3").hide();
+	$(".description4").hide();
+	$(".description5").hide();
+	$("#instructionError").hide();
 	
+	// Resetting quiz
+	$('input:radio[name=q1]').each(function () { $(this).prop('checked', false); });
+	$('input:radio[name=q2]').each(function () { $(this).prop('checked', false); });
+	$(".Q3").prop("checked", false);
+	$("#quizError").hide();
+}
+
+function finalQuiz() {
+		alert("Well done! The next section appears in timed sequences and requires your full attention. Please click 'OK' when you are ready to proceed.");
+		$("#nextButton1").hide();
+		pageTurner();
+		nextInfoTime();
+		dataList.push(q1);
+		dataList.push(q2);
+		dataList.push(q3);
 }
 
 
@@ -476,9 +528,9 @@ function nextInfoTime() {
 	if (trialCounter === 1 && page6counter === 1) {
 		nextTime = window.setTimeout(nextInfo, 35000);				// Set timing for animation here
 	} else if (trialCounter === 1 && page6counter > 1) {
-		nextTime = window.setTimeout(nextInfo, 25000);				// Suggested: 35000, 25000 and 20000 other trails
+		nextTime = window.setTimeout(nextInfo, 22000);				// Suggested: 35000, 25000 and 18000 other trails
 	} else {
-		nextTime = window.setTimeout(nextInfo, 20000);
+		nextTime = window.setTimeout(nextInfo, 17000);
 	} 
 }
 
@@ -817,6 +869,14 @@ var instructionCheck = false;
 var question1 = "";
 var question2 = "";
 var question3 = "";
+
+var q1 = "";
+var q2 = "";
+var q3 = "";
+
+
+var incorrectQ = 0;
+var firstAttempt = true;
 
 
 /* Page 6 variables */
