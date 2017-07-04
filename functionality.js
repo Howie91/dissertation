@@ -225,10 +225,10 @@ function quizPusher() {
 	if (firstAttempt === true) {
 		dataList.push(incorrectQ);
 		if (incorrectQ > 1) {
-			alert("Unfortunately you answered " + incorrectQ + " questions incorrectly. Please give it another go, we know you can get this right!");
+			alert("Unfortunately you answered " + incorrectQ + " questions incorrectly. Let's try again, we know you can get it right!");
 			theNewDeal();
 		} else if (incorrectQ === 1) {
-			alert("Unfortunately you answered " + incorrectQ + " question incorrectly. Please give it another go, we know you can get this right!");
+			alert("Unfortunately you answered " + incorrectQ + " question incorrectly. Let's try again, we know you can get it right!");
 			theNewDeal();
 		} else {
 			finalQuiz();
