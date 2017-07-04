@@ -20,6 +20,7 @@
 			<p id="helpText"><b>Remember:</b><br>There is no right or wrong way to distribute the bonus. Take into account the information you think is important and 
 				award each employee with the bonus you think they deserve.</p>
 			<a class="nextButton" id="infoNext" href="#">Next</a>
+			<a class="nextButton" id="prelimBonus" href="#">Submit</a>
 		</div>
 		
 		
@@ -170,8 +171,7 @@
 			<p class="description3">If invested in stocks, the value of the investment will either increase or decrease. 
 			Luckily, our analytics department has developed an astonishing algorithm that calculates the potential outcomes and the likelihood that each outcome will occur.</p>
 			<p class="description3">If invested in bonds, the investment will increase by the promised amount of $0.1m with 100% certainty.</p>
-			<p class="description4">To keep the bankers satisfied we pay them a bonus every month. Your job is simple, at the end of each month 
-			you will allocate a total of $100,000 in bonuses between the four.</p>
+			<p class="description4">Your job is simple, at the end of each month you will be asked to allocate a total of 100 points between the four based on the quality of their decisions.</p>
 			<p class="description5"><b>Please note:</b> The information provided by the analytics department is the only information the bankers have available, 
 			thus, you will have access to the exact same information as they do.</p>
 			<p id="instructionError" class="error">That was quick! Are you sure you are ready to proceed?</p>
@@ -201,19 +201,19 @@
 					</div>
 				</div>
 				
-			<legend class="quizQ">How much bonus can you distribute every month?</legend>
+			<legend class="quizQ">How many points can you distribute every month?</legend>
 				<div>
 					<div>	
-						<input type="radio" value="$100,000" name="q2" name="Q2" id="hundredThousandsBonus">
-						<label for="hundredThousandsBonus">$100,000</label>
+						<input type="radio" value="100" name="q2" name="Q2" id="hundredThousandsBonus">
+						<label for="hundredThousandsBonus">100</label>
 					</div>
 					<div>
-						<input type="radio" value="$1,000,000" name="q2" name="Q2" id="millionBonus">
-						<label for="millionBonus">$1,000,000</label>
+						<input type="radio" value="1,000" name="q2" name="Q2" id="millionBonus">
+						<label for="millionBonus">1,000</label>
 					</div>
 					<div>
-						<input type="radio" value="$10,000,000" name="q2" name="Q2" id="tenMillionsBonus">
-						<label for="tenMillionsBonus">$10,000,000</label>
+						<input type="radio" value="10,000,000" name="q2" name="Q2" id="tenMillionsBonus">
+						<label for="tenMillionsBonus">10,000,000</label>
 					</div>
 					<div>
 						<input type="radio" value="varies" name="q2" name="Q2" id="dependableBonus">
@@ -305,22 +305,22 @@
 						<div class="divTableCell result" ID="result4">$12.0m</div>
 					</div>
 					<div class="divTableRow">
-						<div class="divTableCell leftAlign bonus">Bonus:<br><span ID="bonusRemaining">Remaining: $100,000</span></div>
-						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus1" min="0" max="100" step="1"/><br><span ID="bonusDisplay1">$0</span></div>
-						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus2" min="0" max="100" step="1"/><br><span ID="bonusDisplay2">$0</span></div>
-						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus3" min="0" max="100" step="1"/><br><span ID="bonusDisplay3">$0</span></div>
-						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus4" min="0" max="100" step="1"/><br><span ID="bonusDisplay4">$0</span></div>
+						<div class="divTableCell leftAlign bonus">Decision Points:<br><span ID="bonusRemaining">Remaining: 100</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus1" min="0" max="100" step="1"/><br><span ID="bonusDisplay1">0</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus2" min="0" max="100" step="1"/><br><span ID="bonusDisplay2">0</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus3" min="0" max="100" step="1"/><br><span ID="bonusDisplay3">0</span></div>
+						<div class="divTableCell bonus"><input type="range" value="0" ID="bonus4" min="0" max="100" step="1"/><br><span ID="bonusDisplay4">0</span></div>
 					</div>
 				</div>
 			</div>
-			<p class="error" ID="bonusError">Don't get to eager now. Please stick to your allocated bonus budget of $100,000.</p>
+			<p class="error" ID="bonusError">Don't get to eager now. Please stay below the limit of 100 points per month.</p>
 			<p class="error" ID="lowBonusError">Woops, we just want to check that you didn't click 'Submit' by mistake. Do you want to submit?</p>
 		</div>
 
 		
 		<div class="content" id="page7">
 			<div id="subPage71">
-				<p><span id="month">January</span> is now finished, and your team members have received their bonuses.</p>
+				<p><span id="month">January</span> is now finished, and HR has received your evaluations.</p>
 				<p>Click 'Request' to ask the analytics team to prepare for a new month.</p>
 				<a class="nextButton" id="requestButton" href="#">Request</a>
 			</div>

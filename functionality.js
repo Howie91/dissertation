@@ -47,6 +47,7 @@ function shuffle(o) {
 };
 	
 
+	
 /* Page 1 */
 /* Displays consent form */
 function consentDisplay() {
@@ -208,14 +209,14 @@ function quizPusher() {
 		incorrectQ += 1;
 	}
 	
-	if (question2 === "$100,000") {
+	if (question2 === "100") {
 		q2 = "correct";
 	} else {
 		q2 = "incorrect";
 		incorrectQ += 1;
 	}
 	
-	if (question3 === "clothing markets ") {
+	if (question3 === "clothing markets " || question3 === "markets ") {
 		q3 = "correct";
 	} else {
 		q3 = "incorrect";
@@ -271,6 +272,7 @@ function finalQuiz() {
 		dataList.push(q1);
 		dataList.push(q2);
 		dataList.push(q3);
+		dataList.push(condition);
 }
 
 
@@ -431,9 +433,9 @@ function bonusUpdater() {
 	remainingBonus = 100 - $("#bonus1").val() - $("#bonus2").val() - $("#bonus3").val() - $("#bonus4").val();
 	
 	if (remainingBonus === 0) {
-		$("#bonusRemaining").html("Remaining: $0");
+		$("#bonusRemaining").html("Remaining: 0");
 	} else {
-		$("#bonusRemaining").html("Remaining: $" + remainingBonus + ",000");
+		$("#bonusRemaining").html("Remaining: " + remainingBonus);
 	}
 	
 	displayUpdater();
@@ -469,9 +471,9 @@ function bonusUpdater() {
 function displayUpdater() {
 	for (var i = 1; i < 4 + 1; i++) {
 		if ($("#bonus" + i).val() > 0) {
-			$("#bonusDisplay" + i).html("$" + $("#bonus" + i).val() + ",000");
+			$("#bonusDisplay" + i).html($("#bonus" + i).val());
 		} else {
-			$("#bonusDisplay" + i).html("$0");
+			$("#bonusDisplay" + i).html("0");
 		}
 	}
 }
@@ -526,72 +528,123 @@ function page6reset() {
 /* Animating in help text */
 function nextInfoTime() {
 	if (trialCounter === 1 && page6counter === 1) {
-		nextTime = window.setTimeout(nextInfo, 35000);				// Set timing for animation here
+		nextTime = window.setTimeout(nextInfo, 3500);				// Set timing for animation here
 	} else if (trialCounter === 1 && page6counter > 1) {
-		nextTime = window.setTimeout(nextInfo, 22000);				// Suggested: 35000, 25000 and 18000 other trails
+		nextTime = window.setTimeout(nextInfo, 2200);				// Suggested: 35000, 25000 and 18000 other trails
 	} else {
-		nextTime = window.setTimeout(nextInfo, 17000);
+		nextTime = window.setTimeout(nextInfo, 1700);
 	} 
 }
 
 
 /* Displaying information on click of 'Next' button */
 function nextInfo() {
-	if (trialCounter <= 11) {
+	if (trialCounter <= 2) {
 		currentPage = 6;
 	} else {
 		currentPage = 7;
 	}
 	
-	if (page6counter === 1) {
-		choiceDisplay();
-		$("#instructionsPage6").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background.");
-	} else if (page6counter === 2) {
-		$(".outcome").show();
-		$(".result").show();
-		$("#instructionsPage6").html("The results are out!<br>");
-	} else if (page6counter === 3) {
-		$(".bonus").show();
-		$("#instructionsPage6").html("Now, please allocate the bonus based on the information available. <br> Click 'Submit' to send your allocations to HR for it to be added to their next paycheck.");
-		$("#infoNext").html("Submit");
-		$("#infoNext").show();
-		if (helpTextShown === false){
-			helpTextTime();
+	if (condition === 0)  {
+		
+		if (page6counter === 1) {
+			choiceDisplay();
+			$("#instructionsPage6").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background.");
+		} else if (page6counter === 2) {
+			$(".outcome").show();
+			$(".result").show();
+			$("#instructionsPage6").html("The results are out!<br>");
+		} else if (page6counter === 3) {
+			$(".bonus").show();
+			$("#instructionsPage6").html("Now, please allocate the points based on the quality of their decisions. <br><br> Click 'Submit' to send your allocations to HR.");
+			$("#infoNext").html("Submit");
+			$("#infoNext").show();
+		} else {
+			$("#requestButton").show();
+			$("#subPage72").hide();
+			$("#month").html(monthList[trialCounter - 1]);
+			bonusCollector();
 		}
+
 	} else {
-		$("#requestButton").show();
-		$("#subPage72").hide();
-		$("#month").html(monthList[trialCounter - 1]);
-		bonusCollector();
+		
+		if (page6counter === 1) {
+			choiceDisplay();
+			$("#instructionsPage6").html("The investment decisions have been made, and the chosen alternatives are now highlighted with a red background.");
+		} else if (page6counter === 2) {
+			$(".bonus").show();
+			$("#instructionsPage6").html("Now, please make a preliminary allocation of the points based on the quality of their decisions. You can make changes once the outcomes are ready. <br><br> Click 'Submit' to send your allocations to HR.");
+			$("#prelimBonus").html("Submit");
+			$("#prelimBonus").show();
+		} else if (page6counter === 3) {
+			$(".bonus").hide();
+			$("#lowBonusError").hide();
+			$("#prelimBonus").hide();
+			$(".outcome").show();
+			$(".result").show();
+			$("#instructionsPage6").html("The results are out!<br>");
+		} else if (page6counter === 4) {
+			$(".bonus").show();
+			$("#instructionsPage6").html("Feel free to make adjustments to the final allocation for the current month. <br><br> Click 'Submit' when you have done so.");
+			$("#infoNext").show();
+		} else {
+			$("#requestButton").show();
+			$("#subPage72").hide();
+			$("#month").html(monthList[trialCounter - 1]);
+			bonusCollector();
+		}
+		
 	}
-	
+		
 	page6counter += 1;
 	
-	if (page6counter < 4) {
-		nextInfoTime();
+	if (condition === 0) {
+		if (page6counter < 4) {
+			nextInfoTime();
+		}
+	} else {
+		if (page6counter < 3) {
+			nextInfoTime();
+		} else if (page6counter === 4) {
+			nextInfoTime();
+		}
 	}
-	
 }
 
-
-/* Animating in help text */
-function helpTextTime() {
-	timeoutID = window.setTimeout(helpTextShow, 7000);
-}
-
-function helpTextShow() {
-	$("#helpText").fadeIn(3000);
-	helpTextShown = true;
-}
 
 
 /* Checking and collecting bonus, displays error if budget is not met, and requires confirmation for small bonus allocations */
+function prelimBonusCollector() {
+	if (doubleCheck === true && remainingBonus >= 90) {
+		$("#lowBonusError").hide();
+		prelimData();
+		nextInfo();
+	}
+	
+	if (remainingBonus < 90 && remainingBonus >= 0) {
+		prelimData();
+		$("#lowBonusError").hide();
+		nextInfo();
+	} else if (remainingBonus >= 90 && doubleCheck === false) {
+		$("#lowBonusError").show();
+		$("#prelimBonus").html("Yes");
+		doubleCheck = true;
+	}
+}
+
+function prelimData() {	
+	prelimBonusList = [];
+	
+	for (var x = 1; x < 5; x++) {
+		prelimBonusList.push(parseFloat($("#bonus" + x).val()));
+	};
+}
+	
 function bonusCollector() {
 	
 	if (doubleCheck === true && remainingBonus >= 90) {
 		dataCollector();
 		nextPage();
-		$("#helpText").hide();
 		$("#infoNext").hide();
 		trialCounter += 1;
 	}
@@ -599,7 +652,6 @@ function bonusCollector() {
 	if (remainingBonus < 90 && remainingBonus >= 0) {
 		dataCollector();
 		nextPage();
-		$("#helpText").hide();
 		$("#infoNext").hide();
 		trialCounter += 1;
 	} else if (remainingBonus >= 90) {
@@ -611,7 +663,11 @@ function bonusCollector() {
 
 /* Collects and stores trial data to Firebase */
 function dataCollector() {
-	var bonusList = [];
+	if (condition === 0) {
+		prelimBonusList = [0, 0, 0, 0];
+	}
+	
+	bonusList = [];
 	
 	for (var x = 1; x < 5; x++) {
 		bonusList.push(parseFloat($("#bonus" + x).val()));
@@ -629,6 +685,7 @@ function dataCollector() {
 	dataList.push(decisionList[indexCompLucky]);
 	dataList.push(choiceList[indexCompLucky]);
 	dataList.push(resultList[indexCompLucky]);
+	dataList.push(prelimBonusList[indexCompLucky]);
 	dataList.push(bonusList[indexCompLucky]);
 	
 	dataList.push(firstProbList[indexCompUnlucky]);
@@ -641,6 +698,7 @@ function dataCollector() {
 	dataList.push(decisionList[indexCompUnlucky]);
 	dataList.push(choiceList[indexCompUnlucky]);
 	dataList.push(resultList[indexCompUnlucky]);
+	dataList.push(prelimBonusList[indexCompUnlucky]);
 	dataList.push(bonusList[indexCompUnlucky]);
 	
 	dataList.push(firstProbList[indexIncompLucky]);
@@ -653,6 +711,7 @@ function dataCollector() {
 	dataList.push(decisionList[indexIncompLucky]);
 	dataList.push(choiceList[indexIncompLucky]);
 	dataList.push(resultList[indexIncompLucky]);
+	dataList.push(prelimBonusList[indexIncompLucky]);
 	dataList.push(bonusList[indexIncompLucky]);
 	
 	dataList.push(firstProbList[indexIncompUnlucky]);
@@ -664,7 +723,8 @@ function dataCollector() {
 	dataList.push(bondOutcomeList[indexIncompUnlucky]);
 	dataList.push(decisionList[indexIncompUnlucky]);
 	dataList.push(choiceList[indexIncompUnlucky]);
-	dataList.push(resultList[indexIncompUnlucky]);
+	dataList.push(resultList[indexIncompUnlucky]); 
+	dataList.push(prelimBonusList[indexIncompUnlucky]);
 	dataList.push(bonusList[indexIncompUnlucky]);
 };
 
@@ -702,7 +762,7 @@ function requestData() {
 function move() {
   var elem = document.getElementById("progressBar");   
   var width = 0;
-  var id = setInterval(frame, 13);						// Set progressbar speed here. Suggested: 13
+  var id = setInterval(frame, 1);						// Set progressbar speed here. Suggested: 13
   function frame() {
     if (width >= 100) {
       clearInterval(id);
@@ -808,6 +868,7 @@ $(document).ready(function(){
 	
 	$("#nextButton1").click(nextPage);
 	$("#infoNext").on("click", nextInfo);
+	$("#prelimBonus").on("click", prelimBonusCollector);
 	$("#requestButton").click(requestData);
 		
 	$("#promotion1").click({param: "0"}, promoFunc);
@@ -841,8 +902,10 @@ $(document).ready(function() {
 });
 
 
-
+//=========================================================================================================================
 /* Defining variables */
+var condition;							// Set condition here
+
 var currentPage = 1;
 var trialCounter = 1;
 
@@ -900,8 +963,60 @@ var decisionQuality = -1;
 var outcomeQuality = -1;
 
 
+//=========================================================================================================================
+// Generic code running when page has loaded
 
-/* Generic code running when page has loaded */
+var conditionAssigned = false;
+
+// Initialize Firebase
+$(document).ready(function() {
+	var config = {
+	apiKey: "AIzaSyAd3DYft_Mlx7h5sukd2AB3irAOgH0Hz38",
+	authDomain: "the-bonus-experiment.firebaseapp.com",
+	databaseURL: "https://the-bonus-experiment.firebaseio.com",
+	projectId: "the-bonus-experiment",
+	storageBucket: "the-bonus-experiment.appspot.com",
+	messagingSenderId: "146625832163"
+	};
+	firebase.initializeApp(config);	
+	
+	var database = firebase.database();
+	ref = database.ref().child('Conditions');
+
+	ref.on('value', decideCondition);
+});
+
+// Reading previous conditions from Firebase, then assigning condition to current participant
+function decideCondition(data) {
+	if (conditionAssigned === false) {
+		count0 = 0;
+		count1 = 0; // !!!! DELETE THIS LATER, IS MANIPULATION FOR PROGRAMMING
+
+		conditionData = data.val();
+		keys = Object.keys(conditionData);
+		for (var i = 0; i < keys.length; i++) {
+			k = keys[i];
+			cond = conditionData[k];
+		
+			if (cond === 0) {
+				count0++;
+			}
+			
+			if (cond === 1) {
+				count1++;
+			}
+		}
+
+		if (count0 > count1 || count0 === count1) {
+			condition = 1;
+		} else {
+			condition = 0;
+		}
+
+		conditionAssigned = true;		
+		firebase.database().ref('Conditions').push(condition);
+	}
+}
 
 
 var today = new Date();
@@ -909,12 +1024,12 @@ var dd = today.getDate();
 var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
 
-if(dd<10){
-	dd='0'+dd;
+if(dd < 10){
+	dd = '0' + dd;
 } 
 
-if(mm<10){
-	mm='0'+mm;
+if(mm < 10){
+	mm = '0'+mm;
 } 
 
 var currentDay = dd + '/' + mm + '/' + yyyy;
@@ -1003,16 +1118,5 @@ $(document).ready(function() {
 	}
 });
 
-/* Initialize Firebase */
-$(document).ready(function() {
-	var config = {
-	apiKey: "AIzaSyAd3DYft_Mlx7h5sukd2AB3irAOgH0Hz38",
-	authDomain: "the-bonus-experiment.firebaseapp.com",
-	databaseURL: "https://the-bonus-experiment.firebaseio.com",
-	projectId: "the-bonus-experiment",
-	storageBucket: "the-bonus-experiment.appspot.com",
-	messagingSenderId: "146625832163"
-	};
-	firebase.initializeApp(config);	
-});
+
 
